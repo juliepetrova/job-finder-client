@@ -1,17 +1,27 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Nav/>
+    <router-view></router-view>
+    <SideMenu></SideMenu>
+    <JobPosts></JobPosts>
+    <JobCRUD></JobCRUD>
   </div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Nav from './components/layout/Nav'
+import JobPosts from './components/jobPosts.vue'
+import JobCRUD from './components/jobCRUD.vue'
+import SideMenu from './components/layout/SideMenu'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Nav,
+    JobPosts,
+    JobCRUD,
+    SideMenu
   }
 }
 </script>
