@@ -1,12 +1,15 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" type="dark" class="nav">
       <b-navbar-brand href="#">Boulot - Find your small job</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
+          <router-link to="/posts" class="lg:mr-16">
+            <span class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Jobs</span>
+          </router-link>
 
           <b-nav-item-dropdown text="Jobs" >
             <b-dropdown-item href="#">Garden</b-dropdown-item>
@@ -30,7 +33,10 @@
             <template v-slot:button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item><router-link to="/myProfile" class="lg:mr-16">
+              <span class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">My profile</span>
+            </router-link></b-dropdown-item>
+            <b-dropdown-item href="/myProfile">Profile</b-dropdown-item>
             <b-dropdown-item href="#">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -48,5 +54,8 @@ export default {
 </script>
 
 <style scoped>
-
+.nav {
+  color: #fff;
+  background-color: #4c58cf;
+}
 </style>

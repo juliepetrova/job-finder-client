@@ -41,7 +41,7 @@
       </b-form-group>
 
 
-      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="submit" class="color-primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
@@ -85,4 +85,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.color-primary{
+  background-color: #4c58cf;
+}
+</style>
