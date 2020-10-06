@@ -16,10 +16,10 @@
         Add here a list of all jobs that are currently available from the specific user.
         <b-card>
           <b-row>
-            <b-col>Id</b-col>
-            <b-col> Title of the job</b-col>
-            <b-col> <b-button class="color-primary">Edit</b-button></b-col>
-            <b-col> <b-button variant="danger">Delete</b-button></b-col>
+            <b-col>Id {{employeePost.id}}</b-col>
+            <b-col> Title of the job {{employeePost.title}}</b-col>
+            <b-col> <b-button @click="editJob(employeePost.id)" class="color-primary">Edit</b-button></b-col>
+            <b-col> <b-button @click="deleteJob(employeePost.id)" variant="danger">Delete</b-button></b-col>
             <b-col> Applicants</b-col>
           </b-row>
         </b-card>
@@ -33,15 +33,31 @@
 </template>
 
 <script>
+
+
   export default {
     name: 'JobCRUD',
+    props: ["employeePost"],
     components: {
 
     },
     data() {
       return {
-        modalShow: false
+        modalShow: false,
       }
+    },
+
+    methods: {
+      // eslint-disable-next-line no-unused-vars
+      editJob(jobId){
+
+      },
+      // eslint-disable-next-line no-unused-vars
+      deleteJob(jobId){
+
+      },
+
+
     }
   }
 </script>

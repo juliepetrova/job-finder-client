@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const AXIOS = axios.create({
-    // baseURL: `/api`,
+    baseURL: `http://localhost:8080/`,
     timeout: 1000
 });
 
@@ -9,10 +9,14 @@ const AXIOS = axios.create({
 export default {
     getJob(jobId){
         return AXIOS.get('/jobs/' + jobId);
+    },
+    getJobPosts() {
+        return AXIOS.get('/jobs');
+    },
+    getEmployeePosts(userId) {
+        return AXIOS.get('users/' + userId + '/jobs')
     }
-    // hello() {
-    //     return AXIOS.get(`/hello`);
-    // },
+
     // getUser(userId) {
     //     return AXIOS.get(`/user/` + userId);
     // },

@@ -6,20 +6,18 @@
             <b-card-img class="map" src="https://images.unsplash.com/photo-1548345680-f5475ea5df84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"></b-card-img>
           </b-col>
           <b-col md="6">
-            <b-card-body title="Job Title">
+            <b-card-body :title="jobPost.title">
               <b-card-text class="text-left">
-                Job Desciption
+                Job Desciption {{jobPost.description}}
                 <br>
                 Date: 12-02-2020
                 <br>
-                Payment: 45$
+                Payment: {{jobPost.payment}}$
                 <br>
                 <a href="#" class="btn btn-outline-secondary btn-icon-right btnViewMore"><span>View more
 <!--            <img src="https://www.iconsdb.com/icons/preview/color/4E22D0/arrow-33-xxl.png" height="24">-->
-          </span></a>
-                <button  @click="getJobById()">Retrieve job</button>
+                </span></a>
 
-                <h4 v-if="showResponse">Retrieved Job {{response.title}} {{response.description}}</h4>
 
               </b-card-text>
             </b-card-body>
@@ -30,31 +28,20 @@
 </template>
 
 <script>
-import api from "./backend-api";
+
  export default {
-   name: 'jobCard',
+   name: 'JobCard',
+   props: ["jobPost"],
    data () {
      return {
-       jobId: 1,
-       response: [],
-       showResponse: false,
 
      }
 
    },
    methods: {
-     getJobById() {
 
-       api.getJob(this.jobId).then(response => {
-         this.response = response.data;
-         this.showResponse = true;
+     },
 
-       })
-           .catch(e => {
-             this.errors.push(e)
-           })
-     }
-   }
  }
 
 </script>
