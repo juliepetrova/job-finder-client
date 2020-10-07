@@ -114,9 +114,7 @@
         </div>
 
 
-      <div v-bind:key="employeePost.id" v-for="employeePost in employeePosts">
-      <JobCRUD v-bind:employeePost="employeePost"></JobCRUD>
-      </div>
+      <JobCRUD></JobCRUD>
     </div>
 
   </div>
@@ -126,7 +124,7 @@
 
 import CreateJob from "@/components/createJob";
 import JobCRUD from "@/components/jobCRUD";
-import api from "@/components/backend-api";
+
 
 export default {
   name: 'ProfilePageEmployer',
@@ -137,18 +135,11 @@ export default {
   data() {
     return {
       modalShow: false,
-      employeePosts: [],
-      userId: 1,
 
     }
   },
   methods: {},
 
-  created(){
-    api.getEmployeePosts(this.userId)
-      .then(res => this.employeePosts = res.data)
-      .catch(err => console.log(err));
-  }
 }
 </script>
 

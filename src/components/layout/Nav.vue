@@ -8,10 +8,10 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <router-link to="/posts" class="lg:mr-16">
-            <span class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Jobs</span>
+            <p class="text-light">Jobs</p>
           </router-link>
 
-          <b-nav-item-dropdown text="Jobs" >
+          <b-nav-item-dropdown text="Categories" >
             <b-dropdown-item href="#">Garden</b-dropdown-item>
             <b-dropdown-item href="#">House Work</b-dropdown-item>
             <b-dropdown-item href="#">Pets</b-dropdown-item>
