@@ -6,6 +6,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
 import ProfilePageEmployer from "@/components/employer/ProfilePageEmployer";
 import jobPosts from "@/components/jobPosts";
+import LogIn from "@/components/authentication/LogIn";
+import Registration from "@/components/authentication/Registration";
 
 
 Vue.config.productionTip = false
@@ -18,6 +20,8 @@ const routes = [
   // { path: '/register', component: Register },
   { path: '/myProfile', component:ProfilePageEmployer},
   { path: '/posts', component: jobPosts},
+  { path: '/login', component: LogIn},
+  { path: '/signup', component: Registration},
 ]
 
 const router = new VueRouter({

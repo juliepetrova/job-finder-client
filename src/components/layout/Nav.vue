@@ -26,6 +26,12 @@
             <b-form-input size="sm" class="mr-sm-2" placeholder="Search location"></b-form-input>
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
+          <router-link to="/login" class="lg:mr-16">
+            <p class="text-light">Log In</p>
+          </router-link>
+          <router-link to="/signup" class="lg:mr-16">
+            <p class="text-light">Sign Up</p>
+          </router-link>
 
 
           <b-nav-item-dropdown right>
