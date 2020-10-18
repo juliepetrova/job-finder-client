@@ -1,73 +1,45 @@
 <template>
   <div class="main">
     <div class="signup d-flex justify-content-center">
-      <b-form class="p-5 shadow-lg bg-white rounded" @submit="register">
-        <h3 class="d-flex justify-content-center"> Sign up </h3>
+      <div class="p-5 shadow-lg bg-white rounded mt-5">
+        <form @submit="register">
+          <h3 class="d-flex justify-content-center text-gray-700 text-3xl mt-3 mb-5"> Sign up </h3>
 
-        <b-form-group id="input-group-0">
-          <b-form-input
-              id="input-0"
-              v-model="form.email"
-              type="text"
-              required
-              placeholder="Enter email"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="input-group-3">
-          <b-form-input
-              id="input-3"
-              v-model="form.firstname"
-              type="text"
-              required
-              placeholder="Enter your first name"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="input-group-4">
-          <b-form-input
-              id="input-4"
-              v-model="form.lastname"
-              type="text"
-              required
-              placeholder="Enter your last name"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="input-group-1">
-          <b-form-input
-              id="input-1"
-              v-model="form.username"
-              type="text"
-              required
-              placeholder="Enter username"
-          ></b-form-input>
-        </b-form-group>
-
-
-
-        <b-form-group id="input-group-2">
-          <b-form-input
-              id="input-2"
-              v-model="form.password"
-              type="password"
-              required
-              placeholder="Enter password"
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group id="input-group-5">
-          <b-form-input
-              id="input-5"
-              v-model="form.confirmPassword"
-              type="password"
-              required
-              placeholder="Confirm password"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-button class="d-flex justify-content-center" type="submit" variant="primary">Log in</b-button>
-      </b-form>
-
+          <div class="flex">
+            <div class="input-container flex-initial mr-2">
+              <input type="text" required v-model="form.firstname"/>
+              <label>Enter your first name</label>
+            </div>
+            <div class="input-container flex-initial ml-2">
+              <input type="text" required v-model="form.lastname"/>
+              <label>Enter your last name</label>
+            </div>
+          </div>
+          <!--        <div class="input-container">-->
+          <!--          <input type="text" required  v-model="form.username" />-->
+          <!--          <label>Enter your username</label>-->
+          <!--        </div>-->
+          <div class="input-container">
+            <input type="text" required v-model="form.email"/>
+            <label>Enter your email</label>
+          </div>
+          <div class="input-container">
+            <input type="password" required v-model="form.password"/>
+            <label>Enter your password</label>
+          </div>
+          <div class="input-container">
+            <input type="password" required v-model="form.confirmPassword"/>
+            <label>Confirm your password</label>
+          </div>
+          <div class="mb-5">
+            <label class="inline-flex items-center">
+              <input class="mr-2 h-5 w-5 " type="checkbox"> <span class="text-sm"><i> I consent to the general terms and conditions</i></span></label>
+          </div>
+          <b-button class="rounded-2xl bg-gradient-to-r from-indigo-700	to-purple-900 text-xl w-full mt-2"
+                    type="submit">Sign up
+          </b-button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -81,12 +53,12 @@ export default {
       type: 'password',
       messagePassword: 'Show Password',
       form: {
-        email:'',
-        firstname:'',
-        lastname:'',
-        username: '',
+        email: '',
+        firstname: '',
+        lastname: '',
+        // username: '',
         password: '',
-        confirmPassword:'',
+        confirmPassword: '',
       }
     }
   },
@@ -109,13 +81,48 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.main {
   width: 100%;
   height: 100%;
 }
 
-.signup{
-  padding-top: 2vw;
+.input-container {
+  position: relative;
+  margin-bottom: 30px;
+  /*width: 20vw;*/
 }
+
+.input-container label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 16px;
+  pointer-event: none;
+  color: darkgray;
+  transition: all 0.5s ease-in-out;
+}
+
+.input-container input {
+  border: 0;
+  border-bottom: 1px solid #555;
+  background: transparent;
+  width: 100%;
+  padding: 8px 0 5px 0;
+  font-size: 16px;
+
+}
+
+.input-container input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #e74c3c;
+}
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label {
+  top: -12px;
+  font-size: 12px;
+}
+
 
 </style>

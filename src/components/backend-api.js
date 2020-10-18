@@ -40,6 +40,17 @@ export default {
             }
         }
         return AXIOS.put('/jobs', form, config)
+    },
+    getUser(user_id){
+        return AXIOS.get('users/' + user_id)
+    },
+    updateUser(personalInfo){
+        return AXIOS.put('/users', personalInfo)
+    },
+
+    getApplications(user_id){
+        return AXIOS.get("/applications/applicant/" + user_id)
     }
+
 
 }

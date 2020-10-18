@@ -1,4 +1,5 @@
 <template>
+  <b-modal  v-model="modalShow">
   <div>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
@@ -54,20 +55,18 @@
         ></b-form-input>
       </b-form-group>
 
-
       <b-button type="submit" class="color-primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
   </div>
+  </b-modal>
 </template>
 
 <script>
 import api from "@/components/backend-api";
 
 export default {
+  props: ["modalShow"],
   data() {
     return {
       form: {
@@ -87,14 +86,13 @@ export default {
     }
   },
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.form))
-
+    onSubmit() {
       let resp = JSON.stringify(this.form);
       api.saveJob(resp)
       .then(res => this.post = res.data)
       .catch(err => console.log(err));
+      this.modalShow = false;
+      this.$emit('closeModal', 'false')
     },
     onReset(evt) {
       evt.preventDefault()

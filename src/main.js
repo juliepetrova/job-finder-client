@@ -3,8 +3,10 @@ import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import './assets/styles/index.css'
 import VueRouter from 'vue-router'
 import ProfilePageEmployer from "@/components/employer/ProfilePageEmployer";
+import ProfilePageJobSeeker from "@/components/jobSeeker/ProfilePageJobSeeker";
 import jobPosts from "@/components/jobPosts";
 import LogIn from "@/components/authentication/LogIn";
 import Registration from "@/components/authentication/Registration";
@@ -17,11 +19,11 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue);
 
 const routes = [
-  // { path: '/register', component: Register },
-  { path: '/myProfile', component:ProfilePageEmployer},
+  { path: '/employer/myProfile', component:ProfilePageEmployer},
   { path: '/posts', component: jobPosts},
   { path: '/login', component: LogIn},
   { path: '/signup', component: Registration},
+  { path: '/jobSeeker/myProfile', component: ProfilePageJobSeeker},
 ]
 
 const router = new VueRouter({

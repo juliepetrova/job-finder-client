@@ -39,10 +39,13 @@
             <template v-slot:button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item><router-link to="/myProfile" class="lg:mr-16">
+            <b-dropdown-item><router-link to="/employer/myProfile" class="lg:mr-16">
               <span class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">My profile</span>
             </router-link></b-dropdown-item>
-            <b-dropdown-item href="/myProfile">Profile</b-dropdown-item>
+            <b-dropdown-item><router-link to="/jobSeeker/myProfile" class="lg:mr-16">
+              <span class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">My profile Job Seeker</span>
+            </router-link></b-dropdown-item>
+
             <b-dropdown-item href="#">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

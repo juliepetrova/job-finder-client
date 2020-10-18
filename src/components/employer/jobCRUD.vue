@@ -1,6 +1,6 @@
 <template>
-  <div id="jobCrud">
-    <b-card class="m-5 " body-class="text-center" header-tag="nav">
+  <div class="col-md-7" id="jobCrud">
+    <b-card body-class="text-center" header-tag="nav">
       <template v-slot:header>
         <b-nav card-header tabs>
           <b-nav-item class="color-secondary" >Current Job Posts</b-nav-item>
@@ -21,7 +21,7 @@
             <b-col> <b>Applicants</b></b-col>
           </b-row>
         </b-card>
-        <b-card class="crudCard text-secondary" v-bind:key="employeePost.id" v-for="employeePost in employeePosts">
+        <b-card class="crudCard text-secondary" v-bind:key="employeePost.id" v-for="(employeePost) in employeePosts">
           <b-row>
             <b-col>{{employeePost.title}}</b-col>
             <b-col>{{employeePost.payment}}$</b-col>
@@ -68,12 +68,9 @@
           <b-form-input id="input-6" v-model="form.address" required></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" class="color-primary">Submit</b-button>
+        <b-button type="submit" class="color-primary">Update</b-button>
         <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
     </div>
     </b-modal>
   </div>
@@ -114,8 +111,7 @@
     },
 
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
+      onSubmit() {
         let data = {
           id: this.form.id,
           status_id: 1,
@@ -132,7 +128,7 @@
         api.updateJob(data)
             .then(res => this.post = res.data)
             .catch(err => console.log(err));
-        this.show = false
+        this.modalShow = false
       },
       onReset(evt) {
         evt.preventDefault()
@@ -159,9 +155,6 @@
         api.deleteJob(jobId)
             .then()
             .catch(err => console.log(err));
-        // api.getEmployeePosts(this.userId)
-        //     .then(res => this.employeePosts = res.data)
-        //     .catch(err => console.log(err));
       },
       getJobPost(jobId){
         api.getJob(jobId)
