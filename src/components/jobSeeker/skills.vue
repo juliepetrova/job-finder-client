@@ -17,7 +17,7 @@
             </svg></button>
         </div>
       </div>
-      
+
     </div>
   </b-card>
 </template>

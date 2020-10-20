@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" class="nav">
+    <b-navbar toggleable="lg" type="dark" class="nav bg-indigo-700">
       <b-navbar-brand href="#">Boulot - Find your small job</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -11,13 +11,6 @@
             <p class="text-light">Jobs</p>
           </router-link>
 
-          <b-nav-item-dropdown text="Categories" >
-            <b-dropdown-item href="#">Garden</b-dropdown-item>
-            <b-dropdown-item href="#">House Work</b-dropdown-item>
-            <b-dropdown-item href="#">Pets</b-dropdown-item>
-            <b-dropdown-item href="#">Software services</b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item href="#">About us</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -65,6 +58,6 @@ export default {
 <style scoped>
 .nav {
   color: #fff;
-  background-color: #4c58cf;
+  /*background-color: #1F3095;*/
 }
 </style>
