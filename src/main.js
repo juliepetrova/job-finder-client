@@ -11,6 +11,7 @@ import ProfilePageJobSeeker from "@/components/jobSeeker/ProfilePageJobSeeker";
 import jobPosts from "@/components/jobPosts";
 import LogIn from "@/components/authentication/LogIn";
 import Registration from "@/components/authentication/Registration";
+import Home from "@/components/Home";
 
 
 Vue.config.productionTip = false
@@ -25,6 +26,8 @@ const routes = [
   { path: '/login', component: LogIn},
   { path: '/signup', component: Registration},
   { path: '/jobSeeker/myProfile', component: ProfilePageJobSeeker},
+  { path: '/', component: Home},
+
 ]
 
 const router = new VueRouter({

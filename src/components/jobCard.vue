@@ -23,7 +23,7 @@
   <!--      </b-card>-->
   <!--  </div>-->
 
-    <div class="card m-2 border-0 rounded-2xl">
+    <div class="card m-3 border-0 rounded-2xl">
       <div class="curved rounded-xl">
         <h1 class="py-4">${{ jobPost.payment }}</h1>
 <!--              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">-->
@@ -79,6 +79,9 @@ export default {
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 }
 
+.card{
+  width: 20vw;
+}
 /*.card{*/
 /*  padding: 0;*/
 /*  background-image: url(https://ionicframework.com/img/getting-started/components-card.png);*/

@@ -15,6 +15,8 @@ module.exports = {
   theme: {
     fontFamily: {
       'body': ['Open Sans'],
+      'questrial': ['Questrial', 'sans-serif'],
+      'comfortaa': ['Comfortaa', 'cursive']
     },
     extend: {},
   },
