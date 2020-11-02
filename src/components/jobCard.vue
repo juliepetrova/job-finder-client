@@ -51,8 +51,8 @@
           </tr>
           </tbody>
         </table>
-        <button class="text-white m-2 p-2 rounded-2xl bg-gradient-to-r from-indigo-700	to-purple-900 text-l w-3/4" type="submit">View more</button>
-
+        <button class="text-white m-2 p-2 rounded-2xl bg-gradient-to-r from-indigo-700	to-purple-900 text-l w-3/4" type="submit"><router-link :to="'/job/' + jobPost.id">
+          <span class="text-xl text-white">View more</span></router-link></button>
       </div>
     </div>
 
@@ -112,7 +112,8 @@ export default {
 .curved{
   color: white;
   /*background-color: #0E3EC3;*/
-  background-color: #00C6FB;
+  /*background-color: #00C6FB;*/
+  background-color: #95B7DE;
 }
 
 

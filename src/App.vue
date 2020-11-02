@@ -2,7 +2,7 @@
   <div class="font-comfortaa">
     <Nav/>
     <router-view></router-view>
-<!--    <Footer class="mt-16"/>-->
+    <!--    <Footer class="mt-16"/>-->
   </div>
 
 </template>
@@ -23,9 +23,11 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
-body. html{
+
+body. html {
   height: 100%;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -34,4 +36,6 @@ body. html{
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
 </style>

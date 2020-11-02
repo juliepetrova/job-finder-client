@@ -14,6 +14,9 @@ export default {
     getJob(jobId){
         return AXIOS.get('/jobs/' + jobId);
     },
+    getUserByJob(jobId){
+        return AXIOS.get('/jobs/' + jobId + '/user');
+    },
     getJobPosts() {
         return AXIOS.get('/jobs');
     },

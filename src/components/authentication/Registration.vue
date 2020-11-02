@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main background min-h-screen">
     <div class="signup d-flex justify-content-center">
       <div class="p-5 shadow-lg bg-white rounded mt-5">
         <form @submit="register">
@@ -124,5 +124,10 @@ export default {
   font-size: 12px;
 }
 
+.background {
+  background-image: url("../../assets/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 </style>

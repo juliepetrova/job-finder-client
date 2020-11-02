@@ -1,7 +1,7 @@
 <template>
-  <div class="main">
+  <div class="main background min-h-screen">
 
-    <div class="login mt-24 d-flex justify-content-center bg-white rounded">
+    <div class="login mt-24 d-flex justify-content-center">
       <div class="p-5 shadow-lg bg-white rounded">
 
         <form @submit="login">
@@ -104,6 +104,12 @@ export default {
   top:-12px;
   font-size:12px;
 
+}
+
+.background {
+  background-image: url("../../assets/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 
