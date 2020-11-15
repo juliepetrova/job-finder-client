@@ -2,11 +2,19 @@ import axios from 'axios'
 
 const AXIOS = axios.create({
     baseURL: `http://localhost:8080/`,
-    timeout: 1000,
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
+});
+
+// Add a request interceptor
+AXIOS.interceptors.request.use(function (config) {
+    const token = localStorage.getItem("token");
+    if(token != null || token != "")
+    config.headers.Authorization = "Bearer " + token;
+
+    return config;
 });
 
 

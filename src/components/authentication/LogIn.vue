@@ -4,15 +4,15 @@
     <div class="login mt-24 d-flex justify-content-center">
       <div class="p-5 shadow-lg bg-white rounded">
 
-        <form @submit="login">
+        <form @submit.prevent="login">
           <h3 class="d-flex justify-content-center text-gray-700 text-3xl mt-3 mb-5"> Log in </h3>
 
           <div class="input-container">
-            <input type="text" required  v-model="form.email" />
-            <label>Enter your email</label>
+            <input type="text" required  v-model="username" />
+            <label>Enter your username</label>
           </div>
           <div class="input-container">
-            <input  v-model="form.password"
+            <input  v-model="password"
                     :type="type" required/>
             <label>Enter your password</label>
           </div>
@@ -40,10 +40,9 @@ export default {
     return {
       type: 'password',
       messagePassword: 'Show Password',
-      form: {
-        email: '',
-        password: '',
-      }
+      username: '',
+      password: '',
+
     }
   },
   methods: {
@@ -57,8 +56,12 @@ export default {
         this.messagePassword = 'Show Password'
       }
     },
-    login() {
-      // this.$store.dispatch('currentUser/loginUser',this.user)
+    login: function () {
+      let username = this.username
+      let password = this.password
+      this.$store.dispatch('login', { username, password })
+          .then(() => this.$router.push('/jobSeeker/myProfile'))
+          .catch(err => console.log(err))
     }
   }
 }

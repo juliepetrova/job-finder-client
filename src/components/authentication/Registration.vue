@@ -2,7 +2,7 @@
   <div class="main background min-h-screen">
     <div class="signup d-flex justify-content-center">
       <div class="p-5 shadow-lg bg-white rounded mt-5">
-        <form @submit="register">
+        <form @submit.prevent="register">
           <h3 class="d-flex justify-content-center text-gray-700 text-3xl mt-3 mb-5"> Sign up </h3>
 
           <div class="flex">
@@ -15,10 +15,10 @@
               <label>Enter your last name</label>
             </div>
           </div>
-          <!--        <div class="input-container">-->
-          <!--          <input type="text" required  v-model="form.username" />-->
-          <!--          <label>Enter your username</label>-->
-          <!--        </div>-->
+                  <div class="input-container">
+                    <input type="text" required  v-model="form.username" />
+                    <label>Enter your username</label>
+                  </div>
           <div class="input-container">
             <input type="text" required v-model="form.email"/>
             <label>Enter your email</label>
@@ -56,7 +56,7 @@ export default {
         email: '',
         firstname: '',
         lastname: '',
-        // username: '',
+        username: '',
         password: '',
         confirmPassword: '',
       }
@@ -74,7 +74,17 @@ export default {
       }
     },
     register() {
-      // this.$store.dispatch('currentUser/loginUser',this.user)
+      let data = {
+        first_name: this.form.firstname,
+        last_name: this.form.lastname,
+        email: this.form.email,
+        username: this.form.username,
+        password: this.form.password,
+        role: 'SEEKER'
+      }
+      this.$store.dispatch('register', data)
+          .then(() => this.$router.push('/login'))
+          .catch(err => console.log(err))
     }
   }
 }
