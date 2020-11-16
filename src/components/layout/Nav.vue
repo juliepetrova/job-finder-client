@@ -27,13 +27,13 @@
         </button>
         <ul class="dropdown-menu absolute hidden text-gray-700 ">
           <li class="">
-            <router-link v-if="isLoggedIn" to="/employer/myProfile" class="sm:mr-8">
-              <h2 class="px-4 text-gray-700 rounded ">My profile Employer</h2>
+            <router-link v-if="isLoggedIn  && (role==='POSTER')" to="/employer/myProfile" class="sm:mr-8">
+              <h2 class="px-4 text-gray-700 rounded ">My profile</h2>
             </router-link>
           </li>
           <li class="">
-            <router-link v-if="isLoggedIn" to="/jobSeeker/myProfile" class="sm:mr-8">
-              <h2 class="px-4 text-gray-700 rounded">My profile JobSeeker</h2>
+            <router-link v-if="isLoggedIn && (role==='SEEKER')" to="/jobSeeker/myProfile" class="sm:mr-8">
+              <h2 class="px-4 text-gray-700 rounded">My profile</h2>
             </router-link>
           </li>
 
@@ -56,9 +56,9 @@ export default {
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
     },
-    // role: () => {
-    //   return localStorage.getItem('role');
-    // }
+    role: () => {
+      return localStorage.getItem('role');
+    }
   },
   methods: {
 

@@ -8,12 +8,12 @@
           <h3 class="d-flex justify-content-center text-gray-700 text-3xl mt-3 mb-5"> Log in </h3>
 
           <div class="input-container">
-            <input type="text" required  v-model="username" />
+            <input type="text" required v-model="username"/>
             <label>Enter your username</label>
           </div>
           <div class="input-container">
-            <input  v-model="password"
-                    :type="type" required/>
+            <input v-model="password"
+                   :type="type" required/>
             <label>Enter your password</label>
           </div>
 
@@ -24,7 +24,9 @@
               }}</label>
           </div>
 
-          <b-button class="rounded-2xl bg-gradient-to-r from-indigo-700	to-purple-900 text-xl w-full" type="submit">Log in</b-button>
+          <b-button class="rounded-2xl bg-gradient-to-r from-indigo-700	to-purple-900 text-xl w-full" type="submit">Log
+            in
+          </b-button>
         </form>
       </div>
 
@@ -59,11 +61,17 @@ export default {
     login: function () {
       let username = this.username
       let password = this.password
-      this.$store.dispatch('login', { username, password })
-          .then(() => this.$router.push('/jobSeeker/myProfile'))
-          .catch(err => console.log(err))
-    }
-  }
+      this.$store.dispatch('login', {username, password})
+          .then(() => {
+            if (localStorage.getItem('role') === 'POSTER') {
+              this.$router.push('/employer/myProfile')
+            } else {
+              this.$router.push('/jobSeeker/myProfile')
+            }
+          })
+      .catch(err => console.log(err))
+}
+}
 }
 </script>
 
@@ -74,38 +82,42 @@ export default {
 }
 
 
-.input-container{
-  position:relative;
-  margin-bottom:25px;
+.input-container {
+  position: relative;
+  margin-bottom: 25px;
   width: 20vw;
 }
-.input-container label{
-  position:absolute;
-  top:0px;
-  left:0px;
-  font-size:16px;
-  pointer-event:none;
+
+.input-container label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 16px;
+  pointer-event: none;
   color: darkgray;
   transition: all 0.5s ease-in-out;
 }
-.input-container input{
-  border:0;
-  border-bottom:1px solid #555;
-  background:transparent;
-  width:100%;
-  padding:8px 0 5px 0;
-  font-size:16px;
+
+.input-container input {
+  border: 0;
+  border-bottom: 1px solid #555;
+  background: transparent;
+  width: 100%;
+  padding: 8px 0 5px 0;
+  font-size: 16px;
   /*color:#fff;*/
 }
-.input-container input:focus{
-  border:none;
-  outline:none;
-  border-bottom:1px solid #e74c3c;
+
+.input-container input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #e74c3c;
 }
+
 .input-container input:focus ~ label,
-.input-container input:valid ~ label{
-  top:-12px;
-  font-size:12px;
+.input-container input:valid ~ label {
+  top: -12px;
+  font-size: 12px;
 
 }
 

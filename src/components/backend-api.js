@@ -11,9 +11,12 @@ const AXIOS = axios.create({
 // Add a request interceptor
 AXIOS.interceptors.request.use(function (config) {
     const token = localStorage.getItem("token");
-    if(token != null || token != "")
-    config.headers.Authorization = "Bearer " + token;
-
+    console.log(token)
+    if (token) {
+        config.headers.Authorization = "Bearer " + token;
+    }else {
+        delete config.headers.Authorization;
+    }
     return config;
 });
 
@@ -51,6 +54,9 @@ export default {
             }
         }
         return AXIOS.put('/jobs', form, config)
+    },
+    apply(form){
+        return AXIOS.post('/applications', form)
     },
     getUser(user_id){
         return AXIOS.get('users/' + user_id)

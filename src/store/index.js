@@ -56,6 +56,9 @@ export default new Vuex.Store({
                         const token = resp.data.jwt
                         const user = resp.data.user
                         localStorage.setItem('token', token)
+                        localStorage.setItem('user', user)
+                        localStorage.setItem('user_id', user.id)
+                        localStorage.setItem('role', user.role)
                         axios.defaults.headers.common['Authorization'] = "Bearer " +token
                         commit('auth_success', token, user)
                         resolve(resp)

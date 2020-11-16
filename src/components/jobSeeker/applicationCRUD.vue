@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       applications:[],
-      userId: 2,
+      userId: localStorage.getItem("user_id"),
     }
   },
 

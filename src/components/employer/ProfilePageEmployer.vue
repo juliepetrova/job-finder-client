@@ -74,7 +74,7 @@ export default {
 
   },
   created(){
-    let user_id = 1;
+    let user_id = localStorage.getItem("user_id");
     api.getUser(user_id)
         .then(res => this.personalInfo = res.data)
         .catch(err => console.log(err));

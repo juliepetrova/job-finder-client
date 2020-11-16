@@ -8,24 +8,24 @@ import LogIn from "@/components/authentication/LogIn";
 import Registration from "@/components/authentication/Registration";
 import Home from "@/components/Home";
 import Job from "@/components/Job";
-import ApplyForJob from "@/components/ApplyForJob";
-
 
 Vue.use(VueRouter)
 
 
 const routes = [
-    { path: '/employer/myProfile', component:ProfilePageEmployer},
+    { path: '/employer/myProfile', component:ProfilePageEmployer,
+        meta: {
+            requiresAuth: true
+        }},
     { path: '/posts', component: jobPosts},
     { path: '/login', component: LogIn},
     { path: '/signup', component: Registration},
-    { path: '/jobSeeker/myProfile', component: ProfilePageJobSeeker,    },
+    { path: '/jobSeeker/myProfile', component: ProfilePageJobSeeker,
+        meta: {
+            requiresAuth: true
+        }  },
     { path: '/', component: Home},
     { path: '/job/:job_id', component: Job},
-    { path: '/apply/:job_id', component: ApplyForJob,         meta: {
-            requiresAuth: true
-        }},
-
 ]
 
 const router = new VueRouter({

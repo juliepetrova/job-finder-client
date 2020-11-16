@@ -1,46 +1,64 @@
 <template>
   <div class="main background min-h-screen">
-    <div class="signup d-flex justify-content-center">
-      <div class="p-5 shadow-lg bg-white rounded mt-5">
-        <form @submit.prevent="register">
-          <h3 class="d-flex justify-content-center text-gray-700 text-3xl mt-3 mb-5"> Sign up </h3>
-
-          <div class="flex">
-            <div class="input-container flex-initial mr-2">
-              <input type="text" required v-model="form.firstname"/>
-              <label>Enter your first name</label>
-            </div>
-            <div class="input-container flex-initial ml-2">
-              <input type="text" required v-model="form.lastname"/>
-              <label>Enter your last name</label>
-            </div>
-          </div>
-                  <div class="input-container">
-                    <input type="text" required  v-model="form.username" />
-                    <label>Enter your username</label>
-                  </div>
-          <div class="input-container">
-            <input type="text" required v-model="form.email"/>
-            <label>Enter your email</label>
-          </div>
-          <div class="input-container">
-            <input type="password" required v-model="form.password"/>
-            <label>Enter your password</label>
-          </div>
-          <div class="input-container">
-            <input type="password" required v-model="form.confirmPassword"/>
-            <label>Confirm your password</label>
-          </div>
-          <div class="mb-5">
-            <label class="inline-flex items-center">
-              <input class="mr-2 h-5 w-5 " type="checkbox"> <span class="text-sm"><i> I consent to the general terms and conditions</i></span></label>
-          </div>
-          <b-button class="rounded-2xl bg-gradient-to-r from-indigo-700	to-purple-900 text-xl w-full mt-2"
-                    type="submit">Sign up
-          </b-button>
-        </form>
+    <div class="flex">
+      <div class="w-1/3 ">
+        <div class="float-right">
+        <div class="mt-24 pt-5 flex justify-center align-items-center mb-5">
+          <button  @click="selectRole('POSTER')" :class="{active: activeBtn === 'POSTER' }" class="poster rounded-full h-56 w-56 border-4 border-yellow-400 hover:border-indigo-600 focus:outline-none pt-40 font-bold">Post jobs</button>
+        </div>
+        <div class="flex justify-center align-items-center">
+          <button @click="selectRole('SEEKER')"  :class="{active: activeBtn === 'SEEKER' }" class="seeker rounded-full h-56 w-56 border-4 border-yellow-400 hover:border-indigo-600 focus:outline-none pt-40 font-bold">Find jobs</button>
+        </div>
+        </div>
       </div>
+      <div class="w-1/3 signup d-flex justify-content-center">
+        <div class="p-5 shadow-lg bg-white rounded mt-5">
+          <form @submit.prevent="register">
+            <h3 class="d-flex justify-content-center text-gray-700 text-3xl mt-3 mb-5"> Sign up </h3>
+            <div class="input-container">
+              <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
+                Please choose a role.
+              </b-alert></div>
+            <div class="flex">
+              <div class="input-container flex-initial mr-2">
+                <input type="text" required v-model="form.firstname"/>
+                <label>Enter your first name</label>
+              </div>
+              <div class="input-container flex-initial ml-2">
+                <input type="text" required v-model="form.lastname"/>
+                <label>Enter your last name</label>
+              </div>
+            </div>
+            <div class="input-container">
+              <input type="text" required v-model="form.username"/>
+              <label>Enter your username</label>
+            </div>
+            <div class="input-container">
+              <input type="text" required v-model="form.email"/>
+              <label>Enter your email</label>
+            </div>
+            <div class="input-container">
+              <input type="password" required v-model="form.password"/>
+              <label>Enter your password</label>
+            </div>
+            <div class="input-container">
+              <input type="password" required v-model="form.confirmPassword"/>
+              <label>Confirm your password</label>
+            </div>
+            <div class="mb-5">
+              <label class="inline-flex items-center">
+                <input class="mr-2 h-5 w-5 " type="checkbox"> <span class="text-sm"><i> I consent to the general terms and conditions</i></span></label>
+            </div>
+            <b-button class="rounded-2xl bg-gradient-to-r from-indigo-700	to-purple-900 text-xl w-full mt-2"
+                      type="submit">Sign up
+            </b-button>
+          </form>
+        </div>
+      </div>
+
+      <div class="w-1/3"></div>
     </div>
+
   </div>
 </template>
 
@@ -52,7 +70,10 @@ export default {
     return {
       type: 'password',
       messagePassword: 'Show Password',
+      activeBtn: '',
+      showDismissibleAlert: false,
       form: {
+        role: '',
         email: '',
         firstname: '',
         lastname: '',
@@ -74,17 +95,25 @@ export default {
       }
     },
     register() {
-      let data = {
-        first_name: this.form.firstname,
-        last_name: this.form.lastname,
-        email: this.form.email,
-        username: this.form.username,
-        password: this.form.password,
-        role: 'SEEKER'
+      if(this.role) {
+        let data = {
+          first_name: this.form.firstname,
+          last_name: this.form.lastname,
+          email: this.form.email,
+          username: this.form.username,
+          password: this.form.password,
+          role: this.form.role
+        }
+        this.$store.dispatch('register', data)
+            .then(() => this.$router.push('/login'))
+            .catch(err => console.log(err))
+      }else{
+        this.showDismissibleAlert = true
       }
-      this.$store.dispatch('register', data)
-          .then(() => this.$router.push('/login'))
-          .catch(err => console.log(err))
+    },
+    selectRole(role) {
+      this.form.role = role;
+      this.activeBtn = role;
     }
   }
 }
@@ -138,6 +167,21 @@ export default {
   background-image: url("../../assets/background.png");
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.seeker{
+  background-image: url("https://image.freepik.com/free-vector/job-hunt-concept-illustration_114360-436.jpg");
+  background-size: contain;
+}
+.poster{
+  background-image: url("https://image.freepik.com/free-vector/online-job-interview_23-2148644500.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.active{
+  border-color: #3949ab;
 }
 
 </style>
