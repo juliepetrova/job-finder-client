@@ -81,6 +81,9 @@ export default {
     },
     setStatusApplication(applicationId, status){
         return AXIOS.put("applications/updateStatus/" + applicationId + "/" + status)
+    },
+    getPastJobs(userId){
+        return AXIOS.get("users/" + userId + '/pastjobs')
     }
 
 

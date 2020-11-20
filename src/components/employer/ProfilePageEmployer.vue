@@ -31,13 +31,14 @@
             <div class="categories">
               <b-button class="btn-select w-100" @click="state = 1">Basic Information</b-button>
               <b-button class="btn-select w-100" @click="state=2">Active Jobs</b-button>
-              <b-button class="btn-select w-100">Past Jobs</b-button>
+              <b-button class="btn-select w-100" @click="state=3">Past Jobs</b-button>
               <b-button class="btn-select w-100" @click="modalShow = !modalShow">Add job offer</b-button>
             </div>
           </div>
           <CreateJob @closeModal="closeModal" v-bind:modalShow="modalShow"></CreateJob>
           <PersonalInformation v-if="state===1" v-bind:personalInfo="personalInfo"></PersonalInformation>
           <JobCRUD v-if="state===2"></JobCRUD>
+          <PastJobs v-if="state===3"></PastJobs>
         </div>
 
     </div>
@@ -50,6 +51,7 @@
 import CreateJob from "@/components/employer/createJob";
 import JobCRUD from "@/components/employer/jobCRUD";
 import PersonalInformation from "@/components/personalInformation";
+import PastJobs from "@/components/employer/pastJobs";
 import api from "@/components/backend-api";
 
 
@@ -59,6 +61,7 @@ export default {
     JobCRUD,
     CreateJob,
     PersonalInformation,
+    PastJobs
   },
   data() {
     return {
