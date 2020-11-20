@@ -31,7 +31,6 @@
             <b-button class="btn-select w-100" @click="state = 3">Skills</b-button>
             <b-button class="btn-select w-100">Past experience</b-button>
             <b-button class="btn-select w-100" @click="state=2">Active Applications</b-button>
-            <b-button class="btn-select w-100">Past Applications</b-button>
           </div>
         </div>
         <PersonalInformation v-if="state===1" v-bind:personalInfo="personalInfo"></PersonalInformation>

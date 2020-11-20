@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -37,6 +38,8 @@ export default new Vuex.Store({
                         const token = resp.data.jwt
                         const user = resp.data.user
                         localStorage.setItem('token', token)
+                        localStorage.setItem('user_id', resp.data.user.id)
+                        localStorage.setItem('role', resp.data.user.role)
                         axios.defaults.headers.common['Authorization'] = "Bearer " + token
                         commit('auth_success', token, user)
                         resolve(resp)
@@ -53,14 +56,22 @@ export default new Vuex.Store({
                 commit('auth_request')
                 axios({url: 'http://localhost:8080/users/register', data: user, method: 'POST' })
                     .then(resp => {
-                        const token = resp.data.jwt
-                        const user = resp.data.user
-                        localStorage.setItem('token', token)
-                        localStorage.setItem('user', user)
-                        localStorage.setItem('user_id', user.id)
-                        localStorage.setItem('role', user.role)
-                        axios.defaults.headers.common['Authorization'] = "Bearer " +token
-                        commit('auth_success', token, user)
+                        // const token = resp.data.jwt
+                        // const user = resp.data.user
+                        // localStorage.setItem('token', token)
+                        // localStorage.setItem('user', user)
+                        // localStorage.setItem('user_id', resp.data.id)
+                        // localStorage.setItem('role', resp.data.role)
+                        if(resp.data.role === "SEEKER"){
+                            console.log("seeker")
+                            let form = {
+                                id: resp.data.id,
+                            }
+                            axios({url: 'http://localhost:8080/users/applicant', data: form, method: 'POST' })
+                                .then(() => console.log("success"))
+                        }
+                        // axios.defaults.headers.common['Authorization'] = "Bearer " +token
+                        // commit('auth_success', token, user)
                         resolve(resp)
                     })
                     .catch(err => {
@@ -76,6 +87,8 @@ export default new Vuex.Store({
                 commit('logout')
                 localStorage.removeItem('token')
                 localStorage.removeItem('user')
+                localStorage.removeItem('user_id')
+                localStorage.removeItem('role')
                 delete axios.defaults.headers.common['Authorization']
                 resolve()
             })

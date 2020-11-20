@@ -3,12 +3,15 @@
     <div class="container flex-column mt-8">
 
 <!--      Apply now-->
-      <b-alert v-model="showDismissibleAlert" variant="success" dismissible>
+      <b-alert v-model="showDismissibleAlert" variant="success" class="text-center" dismissible>
         Application sent successfully!
+      </b-alert>
+      <b-alert v-model="showAlert" variant="danger" class="text-center" dismissible>
+        You have to be logged in to proceed!
       </b-alert>
       <div class="flex justify-center">
           <button @click='openModal'
-              class="text-white text-xl tracking-wide m-2 py-4 px-56 rounded-full bg-gradient-to-r from-indigo-700 to-purple-900 hover:from-indigo-800 hover:to-purple-700 active:border-0 ">
+              class="text-white text-xl focus:outline-none tracking-wide m-2 py-4 px-56 rounded-full bg-gradient-to-r from-indigo-700 to-purple-900 hover:from-indigo-800 hover:to-purple-700 active:border-0 ">
             <span class="text-xl text-white">Apply</span>
           </button>
       </div>
@@ -104,6 +107,7 @@ export default {
       job: [],
       user: [],
       showDismissibleAlert: false,
+      showAlert: false,
       application: {}
     }
   },
@@ -116,7 +120,8 @@ export default {
         this.description = ""
       }else {
         //TODO Notify user he has to be logged in
-        this.$router.push('/login')
+        // this.$router.push('/login')
+        this.showAlert = true;
       }
     },
     apply(){

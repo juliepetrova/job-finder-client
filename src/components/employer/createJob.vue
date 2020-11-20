@@ -1,65 +1,64 @@
 <template>
-  <b-modal  v-model="modalShow">
-  <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-          id="input-group-1"
-          label="Job title:"
-          label-for="input-1"
-      >
-        <b-form-input
-            id="input-1"
-            v-model="form.title"
-            type="text"
-            required
-            placeholder="Enter job title"
-        ></b-form-input>
-      </b-form-group>
+  <div v-if="modalShow" class="fixed overflow-x-hidden overflow-y-auto inset-0 flex justify-center items-center z-50">
+    <div>
+      <div class="relative mx-auto">
+        <div class="bg-white w-full rounded shadow-2xl flex flex-col p-5">
+          <div class="text-2xl font-bold text-center">Edit this job</div>
+          <form @submit="onSubmit" @reset="onReset" v-if="show"
+                class="bg-white rounded px-8 pt-6 pb-8 mb-4 ">
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Job title</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     id="title" v-model="form.title" required type="text" placeholder="Enter job title">
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Job description</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     id="description" v-model="form.description" required type="text" placeholder="Enter job description">
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Job date</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     id="date" v-model="form.date" required type="text" placeholder="Enter job date">
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="payment">Payment amount</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     id="payment" v-model="form.payment" required type="text" placeholder="Enter payment">
+            </div>             <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="city">City</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   id="city" v-model="form.city" required type="text" placeholder="Enter your city">
+          </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="address">Address</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     id="address" v-model="form.address" required type="text" placeholder="Enter your address">
+            </div>
 
-      <b-form-group id="input-group-2" label="Description" label-for="input-2">
-        <b-form-input
-            id="input-2"
-            v-model="form.description"
-            required
-            placeholder="Enter description"
-        ></b-form-input>
-      </b-form-group>
+            <div class="flex items-center justify-between">
+              <button
+                  class="bg-red-400 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  @click="closeModal()" type="button">
+                Close
+              </button>
+              <button
+                  class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 m-1 rounded focus:outline-none focus:shadow-outline right"
+                  type="reset">
+                Reset
+              </button>
+              <button
+                  class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4  rounded focus:outline-none focus:shadow-outline right"
+                  type="submit">
+                Submit
+              </button>
 
-      <b-form-group id="input-group-3" label="Date:" label-for="input-3">
-        <b-form-input
-            id="input-3"
-            v-model="form.date"
-            required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-4" label="Payment:" label-for="input-4">
-        <b-form-input
-            id="input-4"
-            v-model="form.payment"
-            required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-5" label="City:" label-for="input-5">
-        <b-form-input
-            id="input-5"
-            v-model="form.city"
-            required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-6" label="Address:" label-for="input-6">
-        <b-form-input
-            id="input-6"
-            v-model="form.address"
-            required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button type="submit" class="color-primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  </b-modal>
 </template>
 
 <script>
@@ -109,6 +108,10 @@ export default {
         this.show = true
       })
     },
+    closeModal(){
+      this.modalShow = false;
+      this.$emit('closeModal', false)
+    }
 
   }
 }

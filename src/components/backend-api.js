@@ -58,16 +58,31 @@ export default {
     apply(form){
         return AXIOS.post('/applications', form)
     },
-    getUser(user_id){
-        return AXIOS.get('users/' + user_id)
+    getUser(userId){
+        return AXIOS.get('users/' + userId)
     },
     updateUser(personalInfo){
         return AXIOS.put('/users', personalInfo)
     },
 
-    getApplications(user_id){
-        return AXIOS.get("/applications/applicant/" + user_id)
+
+    //Applications
+    getApplications(userId){
+        return AXIOS.get("/applications/applicant/" + userId)
+    },
+    getApplicationsByJobId(jobId){
+        return AXIOS.get("/applications/job/" + jobId)
+    },
+    getUserIdByApplication(applicationId){
+        return AXIOS.get("applications/user/" + applicationId)
+    },
+    deleteApplication(applicationId){
+        return AXIOS.delete("/applications/" + applicationId)
+    },
+    setStatusApplication(applicationId, status){
+        return AXIOS.put("applications/updateStatus/" + applicationId + "/" + status)
     }
+
 
 
 }

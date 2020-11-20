@@ -1,5 +1,6 @@
 <template>
   <div class="col-md-7" id="jobCrud">
+    <vue-confirm-dialog></vue-confirm-dialog>
     <b-card body-class="text-center" header-tag="nav">
       <template v-slot:header>
         <b-nav card-header tabs>
@@ -18,13 +19,16 @@
             <b-col> </b-col>
           </b-row>
         </b-card>
-        <b-card class="crudCard text-secondary" v-bind:key="application.id" v-for="(application) in applications">
+        <b-card class="crudCard text-secondary" v-bind:key="application.id" v-for="(application, index) in applications">
           <b-row>
-            <b-col>{{application.job.title}}</b-col>
+            <b-col><router-link :to="'/job/' + application.job.id">
+              {{application.job.title}}</router-link></b-col>
             <b-col>{{application.job.payment}}$</b-col>
-            <b-col>{{application.date}}</b-col>
-            <b-col>Status</b-col>
-            <b-col> <b-button @click="deleteApplication(application.id)" variant="danger">Cancel</b-button></b-col>
+            <b-col>{{application.job.date}}</b-col>
+            <b-col>{{addStatus(application.status_id)}}</b-col>
+            <b-col>
+              <b-button @click="deleteApplication(index, application.id)" variant="danger">Cancel</b-button>
+            </b-col>
           </b-row>
         </b-card>
 
@@ -49,23 +53,66 @@ export default {
   data() {
     return {
       applications:[],
+      status: '',
       userId: localStorage.getItem("user_id"),
     }
   },
 
   methods: {
 
-    deleteApplication(jobId) {
-      api.deleteJob(jobId)
-          .then()
-          .catch(err => console.log(err));
+    deleteApplication(index, applicationId) {
+      this.$confirm(
+          {
+            message: `Are you sure?`,
+            button: {
+              no: 'No',
+              yes: 'Yes'
+            },
+            /**
+             * Callback Function
+             * @param {Boolean} confirm
+             */
+            callback: confirm => {
+              if (confirm) {
+                this.applications.splice(index, 1)
+                api.deleteApplication(applicationId)
+                    .then()
+                    .catch(err => console.log(err));
+              }
+            }
+          }
+      )
     },
+    addStatus(status_id) {
+      let name = "";
+      switch(status_id) {
+        case 1:
+          name = 'Available'
+          break;
+        case 2:
+          name = 'Completed'
+          break;
+        case 3:
+          name = 'Accepted'
+          break;
+        case 4:
+          name = 'In progress'
+          break;
+        case 5:
+          name = 'Denied'
+          break;
+        default:
+          name = 'Unavailable'
+      }
+      return name;
+    }
   },
   created(){
     api.getApplications(this.userId)
         .then(res => this.applications = res.data)
         .catch(err => console.log(err));
-  }
+  },
+
 
 }
 </script>

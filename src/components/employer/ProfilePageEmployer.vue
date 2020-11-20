@@ -68,8 +68,9 @@ export default {
     }
   },
   methods: {
-    closeModal(){
-      this.modalShow = false;
+    closeModal(e){
+      this.modalShow = e;
+      console.log(e);
     }
 
   },
