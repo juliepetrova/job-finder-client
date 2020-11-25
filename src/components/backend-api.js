@@ -84,6 +84,23 @@ export default {
     },
     getPastJobs(userId){
         return AXIOS.get("users/" + userId + '/pastjobs')
+    },
+    getPastApplications(userId){
+        return AXIOS.get("applications/pastApplications/" + userId)
+    },
+    updateStatusApplication(applicationId, statusId){
+        return AXIOS.put("applications/updateStatus/" + applicationId + '/' + statusId)
+    },
+    updateStatusJob(jobId, statusId){
+        return AXIOS.put("jobs/updateStatus/" + jobId + '/' + statusId)
+    },
+
+//    Applicant
+    getApplicant(id){
+        return AXIOS.get("users/applicant/" + id)
+    },
+    updateApplicant(applicant){
+        return AXIOS.put("users/applicant", applicant)
     }
 
 

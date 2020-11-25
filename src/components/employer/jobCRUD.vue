@@ -121,7 +121,7 @@
       <div class="relative mx-auto ">
         <div class="bg-white w-full rounded shadow-2xl flex flex-col p-5">
           <div class="text-2xl font-bold text-center">View all applications</div>
-          <b-card class="text-secondary" v-bind:key="application.id" v-for="(application) in applications">
+          <b-card class="text-secondary" v-bind:key="application.id" v-for="(application, index) in applications">
             <b-row class="text-center">
               <b-col>
                 <div class="mx-auto mb-4">
@@ -133,11 +133,11 @@
               <b-col>Name</b-col>
               <b-col>{{ application.description }}</b-col>
               <b-col>
-                <button @click="accept(application.id)" class="text-white rounded-full p-2 px-3 bg-green-500">Accept
+                <button @click="accept(application.id, application.job.id)" class="text-white rounded-full p-2 px-3 bg-green-500">Accept
                 </button>
               </b-col>
               <b-col>
-                <button @click="decline(application.id)" class="text-white rounded-full p-2 px-3 bg-red-400">Decline
+                <button @click="decline(index, application.id)" class="text-white rounded-full p-2 px-3 bg-red-400">Decline
                 </button>
               </b-col>
 
@@ -263,22 +263,36 @@ export default {
       )
     },
     getApplications(jobId) {
+      this.applications = []
       api.getApplicationsByJobId(jobId)
-          .then(res => this.applications = res.data)
+          .then(res => {
+            let unprocessedAppl = res.data
+            unprocessedAppl.forEach(appl => {
+              if(appl.status.id != 5){
+                this.applications.push(appl)
+              }
+            })
+            })
           .catch(err => console.log(err));
       this.openModalApplication()
-    }
-    ,
-    accept(applicationId) {
-      api.setStatusApplication(applicationId, 3)
+    },
+
+    accept(applicationId, jobId) {
+      api.updateStatusApplication(applicationId, 3)
           .then()
           .catch(err => console.log(err))
-    }
-    ,
-    decline(applicationId) {
-      api.setStatusApplication(applicationId, 5)
+      api.updateStatusJob(jobId, 2)
           .then()
           .catch(err => console.log(err))
+      this.toggleModalApplication = !this.toggleModalApplication
+
+    }
+    ,
+    decline(index, applicationId) {
+      api.updateStatusApplication(applicationId, 5)
+          .then()
+          .catch(err => console.log(err))
+      this.applications.splice(index, 1)
     }
     ,
   },

@@ -29,13 +29,14 @@
           <div class="categories">
             <b-button class="btn-select w-100" @click="state = 1">Basic Information</b-button>
             <b-button class="btn-select w-100" @click="state = 3">Skills</b-button>
-            <b-button class="btn-select w-100">Past experience</b-button>
+            <b-button class="btn-select w-100" @click="state = 4">Past experience</b-button>
             <b-button class="btn-select w-100" @click="state=2">Active Applications</b-button>
           </div>
         </div>
         <PersonalInformation v-if="state===1" v-bind:personalInfo="personalInfo"></PersonalInformation>
         <ApplicationCRUD v-if="state===2"></ApplicationCRUD>
-        <Skills v-if="state===3"></Skills>
+        <Skills v-if="state===3" v-bind:applicantId="personalInfo.id"></Skills>
+        <PastApplications v-if="state === 4"></PastApplications>
       </div>
 
     </div>
@@ -48,6 +49,7 @@
 import PersonalInformation from "@/components/personalInformation";
 import ApplicationCRUD from "@/components/jobSeeker/applicationCRUD";
 import Skills from "@/components/jobSeeker/skills";
+import PastApplications from "@/components/jobSeeker/pastApplications";
 import api from "@/components/backend-api";
 
 
@@ -56,7 +58,8 @@ export default {
   components: {
     PersonalInformation,
     ApplicationCRUD,
-    Skills
+    Skills,
+    PastApplications
   },
   data() {
     return {

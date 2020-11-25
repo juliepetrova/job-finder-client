@@ -69,7 +69,6 @@ export default {
   data() {
     return {
       form: {
-        status_id: 1,
         title: '',
         description: '',
         date: '',
@@ -77,6 +76,9 @@ export default {
         city: '',
         address: '',
         user: {
+          id: 1
+        },
+        status: {
           id: 1
         }
       },

@@ -25,9 +25,10 @@
               {{application.job.title}}</router-link></b-col>
             <b-col>{{application.job.payment}}$</b-col>
             <b-col>{{application.job.date}}</b-col>
-            <b-col>{{addStatus(application.status_id)}}</b-col>
+            <b-col>{{application.status.name}}</b-col>
             <b-col>
-              <b-button @click="deleteApplication(index, application.id)" variant="danger">Cancel</b-button>
+              <b-button v-if="application.status.id != 3" @click="deleteApplication(index, application.id)" variant="danger">Cancel</b-button>
+              <b-button v-if="application.status.id === 3" @click="markCompleted(index, application.id)" variant="success">Complete</b-button>
             </b-col>
           </b-row>
         </b-card>
@@ -47,12 +48,10 @@ import api from "@/components/backend-api";
 export default {
   name: 'ApplicationCRUD',
   props: ["employeePost"],
-  components: {
-
-  },
+  components: {},
   data() {
     return {
-      applications:[],
+      applications: [],
       status: '',
       userId: localStorage.getItem("user_id"),
     }
@@ -83,36 +82,40 @@ export default {
           }
       )
     },
-    addStatus(status_id) {
-      let name = "";
-      switch(status_id) {
-        case 1:
-          name = 'Available'
-          break;
-        case 2:
-          name = 'Completed'
-          break;
-        case 3:
-          name = 'Accepted'
-          break;
-        case 4:
-          name = 'In progress'
-          break;
-        case 5:
-          name = 'Denied'
-          break;
-        default:
-          name = 'Unavailable'
-      }
-      return name;
+    markCompleted(index, applicationId) {
+      this.$confirm(
+          {
+            message: `Have you completed this job?`,
+            button: {
+              no: 'No',
+              yes: 'Yes'
+            },
+            callback: confirm => {
+              if (confirm) {
+                this.applications.splice(index, 1)
+                //  TODO set status to 2(completed)
+                api.updateStatusApplication(applicationId, 2)
+                    .then()
+                    .catch(err => console.log(err));
+              }
+            }
+          }
+      )
+    },
+  },
+    created() {
+      api.getApplications(this.userId)
+          .then(res => {
+            let unprocessedAppl = res.data
+            unprocessedAppl.forEach(appl => {
+              if (appl.status.id != 2) {
+                this.applications.push(appl)
+              }
+            })
+            // this.applications = res.data
+          })
+          .catch(err => console.log(err));
     }
-  },
-  created(){
-    api.getApplications(this.userId)
-        .then(res => this.applications = res.data)
-        .catch(err => console.log(err));
-  },
-
 
 }
 </script>

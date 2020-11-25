@@ -126,7 +126,6 @@ export default {
     },
     apply(){
       let data = {
-        status_id: 1,
         description: this.description,
         date: new Date().toLocaleString(),
         applicant: {
@@ -134,6 +133,9 @@ export default {
         },
         job:{
           id: this.job.id
+        },
+        status: {
+          id: 1
         }
       }
       let resp = JSON.stringify(data);
