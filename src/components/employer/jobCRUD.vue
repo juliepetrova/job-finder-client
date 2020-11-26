@@ -10,8 +10,7 @@
         </b-nav>
       </template>
 
-      <b-card-text>
-        Add here a list of all jobs that are currently available from the specific user.
+      <b-card-text class="overflow-auto scrolling">
         <b-card class="p-0 m-0 border-0">
           <b-row>
             <b-col><b>Title of the job</b></b-col>
@@ -334,6 +333,9 @@ a:hover {
 .crudCard:hover {
   background-color: #cccfed;
   color: #333333 !important;
+}
+.scrolling{
+  height: 20vw;
 }
 
 

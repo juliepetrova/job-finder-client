@@ -22,14 +22,16 @@ AXIOS.interceptors.request.use(function (config) {
 
 
 export default {
+
+    //Jobs
     getJob(jobId){
         return AXIOS.get('/jobs/' + jobId);
     },
     getUserByJob(jobId){
         return AXIOS.get('/jobs/' + jobId + '/user');
     },
-    getJobPosts() {
-        return AXIOS.get('/jobs');
+    getJobPosts(params) {
+        return AXIOS.get('/jobs',{ params });
     },
     getEmployeePosts(userId) {
         return AXIOS.get('/users/' + userId + '/jobs')
@@ -38,32 +40,31 @@ export default {
         return AXIOS.delete('/jobs/' + jobId)
     },
     saveJob(form){
-        let config = {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }
-        return AXIOS.post('/jobs', form, config)
+        return AXIOS.post('/jobs', form)
     },
     updateJob(form) {
-        let config = {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }
-        return AXIOS.put('/jobs', form, config)
+        return AXIOS.put('/jobs', form)
     },
     apply(form){
         return AXIOS.post('/applications', form)
     },
+    getPastJobs(userId){
+        return AXIOS.get("users/" + userId + '/pastjobs')
+    },
+    updateStatusJob(jobId, statusId){
+        return AXIOS.put("jobs/updateStatus/" + jobId + '/' + statusId)
+    },
+
+
+
+    //Users
     getUser(userId){
         return AXIOS.get('users/' + userId)
     },
     updateUser(personalInfo){
         return AXIOS.put('/users', personalInfo)
     },
+
 
 
     //Applications
@@ -82,18 +83,14 @@ export default {
     setStatusApplication(applicationId, status){
         return AXIOS.put("applications/updateStatus/" + applicationId + "/" + status)
     },
-    getPastJobs(userId){
-        return AXIOS.get("users/" + userId + '/pastjobs')
-    },
     getPastApplications(userId){
         return AXIOS.get("applications/pastApplications/" + userId)
     },
     updateStatusApplication(applicationId, statusId){
         return AXIOS.put("applications/updateStatus/" + applicationId + '/' + statusId)
     },
-    updateStatusJob(jobId, statusId){
-        return AXIOS.put("jobs/updateStatus/" + jobId + '/' + statusId)
-    },
+
+
 
 //    Applicant
     getApplicant(id){
