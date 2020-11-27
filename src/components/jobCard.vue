@@ -1,30 +1,6 @@
 <template>
-  <!--  <div class="jobCard">-->
-  <!--      <b-card no-body class="card overflow-hidden m-4 shadow mb-5 bg-white rounded" style="max-width: 540px;">-->
-  <!--        <b-row no-gutters>-->
-  <!--          <b-col md="6">-->
-  <!--            <b-card-img class="map" src="https://images.unsplash.com/photo-1548345680-f5475ea5df84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"></b-card-img>-->
-  <!--          </b-col>-->
-  <!--          <b-col md="6">-->
-  <!--            <b-card-body :title="jobPost.title">-->
-  <!--              <b-card-text class="text-left">-->
-  <!--                Job Desciption {{jobPost.description}}-->
-  <!--                <br>-->
-  <!--                Date: 12-02-2020-->
-  <!--                <br>-->
-  <!--                Payment: {{jobPost.payment}}$-->
-  <!--                <br>-->
-  <!--                <a href="#" class="btn btn-outline-secondary btn-icon-right btnViewMore"><span>View more-->
-  <!--                </span></a>-->
-  <!--              </b-card-text>-->
-  <!--            </b-card-body>-->
-  <!--          </b-col>-->
-  <!--        </b-row>-->
-  <!--      </b-card>-->
-  <!--  </div>-->
-
     <div class="card m-3 border-0 rounded-2xl">
-      <div class="curved rounded-xl">
+      <div class="rounded-xl text-white" :style="{backgroundColor: getColor()}">
         <h1 class="py-4">${{ jobPost.payment }}</h1>
 <!--              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">-->
 <!--                <path fill="#fff" fill-opacity="1"-->
@@ -64,10 +40,25 @@ export default {
   name: 'JobCard',
   props: ["jobPost"],
   data() {
-    return {}
+    return {
+      customColor: {
+        'text-white': 'white',
+        'background-color': this.getColor()
+      }
+    }
 
   },
-  methods: {},
+  methods: {
+    getColor() {
+      let arrayColor = ["#77ACA2", "#C2AFF0", "#9191E9", "#457EAC", "#2D5D7B", "#468189", "#9DBEBB", "#84BCDA", "#313B72", "#7EE081", "#62A87C"]
+      let min = 0
+      let max = arrayColor.length
+      let number = Math.floor(Math.random() * (max - min) + min);
+      console.log(number)
+      console.log(arrayColor[1])
+      return arrayColor[number]
+    }
+  },
 
 }
 
@@ -82,37 +73,9 @@ export default {
 .card{
   width: 20vw;
 }
-/*.card{*/
-/*  padding: 0;*/
-/*  background-image: url(https://ionicframework.com/img/getting-started/components-card.png);*/
-/*  background-repeat: no-repeat;*/
-/*  background-position: right;*/
-/*  background-size: 80px;*/
-/*}*/
-
-/*.btnViewMore {*/
-/*  padding:2px;*/
-/*  padding-left: 15px;*/
-/*  padding-right: 15px;*/
-/*  box-shadow: 0 12px 15px -4px rgba(12, 5, 62, 0.12);*/
-/*  border: solid 1.2px #4e22d0;*/
-/*  border-radius: 24px;*/
-/*  color: #4e22d0;*/
-
-/*}*/
-/*.btnViewMore:hover {*/
-/*  background: #4e22d0 ;*/
-/*  box-shadow: 0 12px 15px -4px rgba(78, 34, 208, 0.3), 0 12px 15px -4px rgba(12, 5, 62, 0.15);*/
-/*  color: #fff;*/
-/*}*/
-/*.map{*/
-/*  object-fit: fill;*/
-/*}*/
 
 .curved{
   color: white;
-  /*background-color: #0E3EC3;*/
-  /*background-color: #00C6FB;*/
   background-color: #95B7DE;
 }
 
