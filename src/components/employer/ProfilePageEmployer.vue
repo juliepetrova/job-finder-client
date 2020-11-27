@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container emp-profile">
+    <div class=" emp-profile">
         <div class="row">
           <div class="col-md-3">
             <div class="profile-img">
@@ -14,7 +14,7 @@
           <div class="col-md-7">
             <div class="profile-head">
               <h3>
-                Julie Marley
+                {{ personalInfo.first_name }} {{personalInfo.last_name}}
               </h3>
 
               <p class="proile-rating">Rates : <span>8/10</span></p>
@@ -29,92 +29,18 @@
         <div class="row">
           <div class="col-md-3">
             <div class="categories">
-              <b-button class="btn-select w-100 active">Basic Information</b-button>
-              <b-button class="btn-select w-100">Active Jobs</b-button>
-              <b-button class="btn-select w-100">Past Jobs</b-button>
+              <b-button class="btn-select w-100" @click="state = 1">Basic Information</b-button>
+              <b-button class="btn-select w-100" @click="state=2">Active Jobs</b-button>
+              <b-button class="btn-select w-100" @click="state=3">Past Jobs</b-button>
               <b-button class="btn-select w-100" @click="modalShow = !modalShow">Add job offer</b-button>
-<!--              <p>WORK LINK</p>-->
-<!--              <a href="">Website Link</a><br/>-->
-<!--              <a href="">Bootsnipp Profile</a><br/>-->
-<!--              <a href="">Bootply Profile</a>-->
-<!--              <p>SKILLS</p>-->
-<!--              <a href="">Web Designer</a><br/>-->
-<!--              <a href="">Web Developer</a><br/>-->
-<!--              <a href="">WordPress</a><br/>-->
-<!--              <a href="">WooCommerce</a><br/>-->
-<!--              <a href="">PHP, .Net</a><br/>-->
             </div>
           </div>
-          <b-modal v-model="modalShow"><CreateJob></CreateJob></b-modal>
-            <b-card class=" col-md-7"  header-tag="nav">
-              <template v-slot:header>
-            <b-nav card-header tabs>
-              <b-nav-item class="color-secondary" >Profile information</b-nav-item>
-            </b-nav>
-              </template>
-            <div class="tab-content profile-tab" id="myTabContent">
-               <div class="row">
-                  <div class="col-md-6">
-                    <label>Username</label>
-                  </div>
-                  <div class="col-md-6">
-                    <p>julie123</p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Name</label>
-                  </div>
-                  <div class="col-md-6">
-                    <p>Julie Marley</p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Email</label>
-                  </div>
-                  <div class="col-md-6">
-                    <p>juliemarley@gmail.com</p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Phone</label>
-                  </div>
-                  <div class="col-md-6">
-                    <p>123 456 7890</p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Date of birth</label>
-                  </div>
-                  <div class="col-md-6">
-                    <p>01-01-2000</p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Country</label>
-                  </div>
-                  <div class="col-md-6">
-                    <p>Netherlands</p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>City</label>
-                  </div>
-                  <div class="col-md-6">
-                    <p>Eindhoven</p>
-                  </div>
-                </div>
-              </div>
-            </b-card>
+          <CreateJob @closeModal="closeModal" v-bind:modalShow="modalShow"></CreateJob>
+          <PersonalInformation v-if="state===1" v-bind:personalInfo="personalInfo"></PersonalInformation>
+          <JobCRUD v-if="state===2"></JobCRUD>
+          <PastJobs v-if="state===3"></PastJobs>
         </div>
 
-
-      <JobCRUD></JobCRUD>
     </div>
 
   </div>
@@ -122,23 +48,41 @@
 
 <script>
 
-import CreateJob from "@/components/createJob";
-import JobCRUD from "@/components/jobCRUD";
+import CreateJob from "@/components/employer/createJob";
+import JobCRUD from "@/components/employer/jobCRUD";
+import PersonalInformation from "@/components/personalInformation";
+import PastJobs from "@/components/employer/pastJobs";
+import api from "@/components/backend-api";
 
 
 export default {
   name: 'ProfilePageEmployer',
   components: {
     JobCRUD,
-    CreateJob
+    CreateJob,
+    PersonalInformation,
+    PastJobs
   },
   data() {
     return {
+      state: 1,
       modalShow: false,
-
+      personalInfo: []
     }
   },
-  methods: {},
+  methods: {
+    closeModal(e){
+      this.modalShow = e;
+      console.log(e);
+    }
+
+  },
+  created(){
+    let user_id = localStorage.getItem("user_id");
+    api.getUser(user_id)
+        .then(res => this.personalInfo = res.data)
+        .catch(err => console.log(err));
+  },
 
 }
 </script>
@@ -205,32 +149,7 @@ body{
   border: none;
   border-bottom:2px solid #0062cc;
 }
-.profile-work{
-  padding: 14%;
-  margin-top: -15%;
-}
-.profile-work p{
-  font-size: 12px;
-  color: #818182;
-  font-weight: 600;
-  margin-top: 10%;
-}
-.profile-work a{
-  text-decoration: none;
-  color: #495057;
-  font-weight: 600;
-  font-size: 14px;
-}
-.profile-work ul{
-  list-style: none;
-}
-.profile-tab label{
-  font-weight: 600;
-}
-.profile-tab p{
-  font-weight: 600;
-  color: #0062cc;
-}
+
 .btn-select {
   padding-bottom: 5%;
   padding-top: 5%;

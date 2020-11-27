@@ -1,61 +1,98 @@
 <template>
-  <div>
-    <b-navbar toggleable="lg" type="dark" class="nav">
-      <b-navbar-brand href="#">Boulot - Find your small job</b-navbar-brand>
+  <div class="md:container mx-auto flex p-2 justify-between">
+    <router-link to="/" class="lg:mr-8">
+      <h2 class="p-4 text-gray-900 rounded-lg"><b>Boulot- Find your small job</b></h2>
+    </router-link>
+    <div class="flex">
+      <router-link to="/" class="lg:mr-8">
+        <h2 class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Home</h2>
+      </router-link>
+      <router-link to="/posts" class="lg:mr-8">
+        <h2 class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Jobs</h2>
+      </router-link>
+      <router-link v-if="!isLoggedIn" to="/login" class="lg:mr-8">
+        <h2 class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Log in</h2>
+      </router-link>
+      <router-link v-if="!isLoggedIn" to="/signup" class="lg:mr-8">
+        <h2 class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Sign up</h2>
+      </router-link>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <div v-if="isLoggedIn" class="dropdown inline-block relative">
+        <button
+            class="bg-transparent p-4 text-gray-700 rounded-lg hover:bg-gray-300 inline-flex items-center">
+          <span class="mr-1">More</span>
+          <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+          </svg>
+        </button>
+        <ul class="dropdown-menu absolute hidden text-gray-700 ">
+          <li class="">
+            <router-link v-if="isLoggedIn  && (role==='POSTER')" to="/employer/myProfile" class="sm:mr-8">
+              <h2 class="px-4 text-gray-700 rounded ">My profile</h2>
+            </router-link>
+          </li>
+          <li class="">
+            <router-link v-if="isLoggedIn && (role==='SEEKER')" to="/jobSeeker/myProfile" class="sm:mr-8">
+              <h2 class="px-4 text-gray-700 rounded">My profile</h2>
+            </router-link>
+          </li>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <router-link to="/posts" class="lg:mr-16">
-            <p class="text-light">Jobs</p>
-          </router-link>
-
-          <b-nav-item-dropdown text="Categories" >
-            <b-dropdown-item href="#">Garden</b-dropdown-item>
-            <b-dropdown-item href="#">House Work</b-dropdown-item>
-            <b-dropdown-item href="#">Pets</b-dropdown-item>
-            <b-dropdown-item href="#">Software services</b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item href="#">About us</b-nav-item>
-        </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search location"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
-
-
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item><router-link to="/myProfile" class="lg:mr-16">
-              <span class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">My profile</span>
-            </router-link></b-dropdown-item>
-            <b-dropdown-item href="/myProfile">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+          <div v-if="isLoggedIn" class="sm:mr-4">
+            <button @click.prevent="logout" class="px-4 text-gray-700 rounded align-middle">Log
+              Out
+            </button>
+          </div>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Nav'
+  name: 'Nav',
+  computed: {
+    isLoggedIn: function () {
+      return this.$store.getters.isLoggedIn;
+    },
+    role: () => {
+      return localStorage.getItem('role');
+    }
+  },
+  methods: {
+
+    logout: function () {
+      this.$store.dispatch('logout')
+          .then(() => {
+            this.$router.push('/login')
+          })
+    }
+  }
 }
 
 </script>
 
 <style scoped>
 .nav {
-  color: #fff;
-  background-color: #4c58cf;
+  color: gray;
+}
+
+.links {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.below-title {
+  border-top: dotted 1px #999;
+  border-bottom: dotted 1px #999;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: darkgray;
+  font-size: smaller;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 </style>

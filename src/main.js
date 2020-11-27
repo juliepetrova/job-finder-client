@@ -1,30 +1,32 @@
 import Vue from 'vue'
 import App from './App.vue'
+import router from "@/router";
+import store from  "@/store";
+import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import VueRouter from 'vue-router'
-import ProfilePageEmployer from "@/components/employer/ProfilePageEmployer";
-import jobPosts from "@/components/jobPosts";
+import './assets/styles/index.css'
+import '@fortawesome/fontawesome-free/css/all.css';
+import VueConfirmDialog from 'vue-confirm-dialog'
 
 
 Vue.config.productionTip = false
-Vue.use(VueRouter)
-
 // Bootstrap
 Vue.use(BootstrapVue);
+Vue.use(VueConfirmDialog)
+Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 
-const routes = [
-  // { path: '/register', component: Register },
-  { path: '/myProfile', component:ProfilePageEmployer},
-  { path: '/posts', component: jobPosts},
-]
+Vue.prototype.$http = axios;
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = "Bearer " + token
+}
 
-const router = new VueRouter({
-  routes // short for `routes: routes`
-})
 
 new Vue({
   render: h => h(App),
   router,
+  store,
+  axios,
 }).$mount('#app')
