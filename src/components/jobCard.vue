@@ -54,8 +54,6 @@ export default {
       let min = 0
       let max = arrayColor.length
       let number = Math.floor(Math.random() * (max - min) + min);
-      console.log(number)
-      console.log(arrayColor[1])
       return arrayColor[number]
     }
   },

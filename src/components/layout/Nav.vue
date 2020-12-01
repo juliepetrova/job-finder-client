@@ -57,6 +57,7 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     role: () => {
+      console.log(localStorage.getItem('role'))
       return localStorage.getItem('role');
     }
   },

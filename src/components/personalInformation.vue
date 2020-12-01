@@ -99,7 +99,6 @@ export default {
   methods: {
     save(personalInfo) {
       this.editing = false;
-      console.log(this.personalInfo.first_name)
       api.updateUser(personalInfo);
     }
   }

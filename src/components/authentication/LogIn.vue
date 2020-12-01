@@ -73,9 +73,10 @@ export default {
           .then(() => {
             if (localStorage.getItem('role') === 'POSTER') {
               this.$router.push('/employer/myProfile')
-            } else {
+            } else if (localStorage.getItem('role') === 'SEEKER') {
               this.$router.push('/jobSeeker/myProfile')
             }
+            console.log(localStorage.getItem('role'))
           })
           .catch(() => this.authError = "Invalid credentials!")
     }

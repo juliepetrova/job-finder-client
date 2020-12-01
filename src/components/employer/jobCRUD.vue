@@ -3,6 +3,29 @@
 
     <vue-confirm-dialog></vue-confirm-dialog>
 
+    <!--    Sidebar applicant profile-->
+    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" shadow>
+      <template>
+        <div class="p-3">
+          <div class="mt-2 rounded-3xl shadow-inner p-4  ">
+            <div class="mx-auto mb-4">
+              <img class="rounded-full h-32 w-32 object-cover mx-auto"
+                   :src=" userAppl.image "
+                   alt="ProfileImage"/>
+            </div>
+            <div class="text-center"> Applicant name: <br> <b>{{ userAppl.first_name }} {{ userAppl.last_name }} </b></div>
+            <div class="pt-4 px-4">
+                <p>Email: {{userAppl.email}}</p>
+              <p>City: {{userAppl.city}}</p>
+              <p>Country: {{userAppl.country}}</p>
+            </div>
+            <!--          <b-button variant="primary" block @click="hide">Close Sidebar</b-button>-->
+          </div>
+        </div>
+      </template>
+    </b-sidebar>
+    <!--    End Sidebar-->
+
     <b-card body-class="text-center" header-tag="nav">
       <template v-slot:header>
         <b-nav card-header tabs>
@@ -21,7 +44,8 @@
             <b-col><b>Applicants</b></b-col>
           </b-row>
         </b-card>
-        <b-card class="crudCard text-secondary" v-bind:key="employeePost.id" v-for="(employeePost, index) in employeePosts">
+        <b-card class="crudCard text-secondary" v-bind:key="employeePost.id"
+                v-for="(employeePost, index) in employeePosts">
           <b-row>
             <b-col>{{ employeePost.title }}</b-col>
             <b-col>{{ employeePost.payment }}$</b-col>
@@ -57,38 +81,47 @@
                   class="bg-white rounded px-8 pt-6 pb-8 mb-4 ">
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Job title</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="title" v-model="form.title" required type="text" placeholder="Enter job title">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Job description</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="description" v-model="form.description" required type="text" placeholder="Enter job description">
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="description" v-model="form.description" required type="text"
+                    placeholder="Enter job description">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Job date</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="date" v-model="form.date" required type="text" placeholder="Enter job date">
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="date" v-model="form.date" required type="text" placeholder="Enter job date">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="payment">Payment amount</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="payment" v-model="form.payment" required type="text" placeholder="Enter payment">
-              </div>             <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2" for="city">City</label>
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                     id="city" v-model="form.city" required type="text" placeholder="Enter your city">
-            </div>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="payment" v-model="form.payment" required type="text" placeholder="Enter payment">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="city">City</label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="city" v-model="form.city" required type="text" placeholder="Enter your city">
+              </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="address">Address</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="address" v-model="form.address" required type="text" placeholder="Enter your address">
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="address" v-model="form.address" required type="text" placeholder="Enter your address">
               </div>
 
               <div class="mb-4 hidden">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="id">Job id</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="id" v-model="form.id" required>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="id" v-model="form.id" required>
               </div>
               <div class="flex items-center justify-between">
                 <button
@@ -121,22 +154,22 @@
         <div class="bg-white w-full rounded shadow-2xl flex flex-col p-5">
           <div class="text-2xl font-bold text-center">View all applications</div>
           <b-card class="text-secondary" v-bind:key="application.id" v-for="(application, index) in applications">
-            <b-row class="text-center">
+            <b-row class="text-center align-items-center">
               <b-col>
-                <div class="mx-auto mb-4">
-                  <img class="rounded-full h-20 w-20 object-cover mx-auto"
-                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                       alt="ProfileImage"/>
-                </div>
+                <b-button v-b-toggle.sidebar-no-header @click="loadApplicantProfile(application.applicant.id)"
+                          class="text-white rounded-full p-2 px-3 bg-purple-500">View Profile
+                </b-button>
               </b-col>
-              <b-col>Name</b-col>
-              <b-col>{{ application.description }}</b-col>
+              <b-col>{{ application.applicant.rating }}/ 10 <i class="far fa-star"></i></b-col>
+              <b-col cols="5">{{ application.description }}</b-col>
               <b-col>
-                <button @click="accept(application.id, application.job.id)" class="text-white rounded-full p-2 px-3 bg-green-500">Accept
+                <button @click="accept(application.id, application.job.id)"
+                        class="text-white rounded-full p-2 px-3 bg-green-500">Accept
                 </button>
               </b-col>
               <b-col>
-                <button @click="decline(index, application.id)" class="text-white rounded-full p-2 px-3 bg-red-400">Decline
+                <button @click="decline(index, application.id)" class="text-white rounded-full p-2 px-3 bg-red-400">
+                  Decline
                 </button>
               </b-col>
 
@@ -169,11 +202,12 @@ export default {
       applications: [],
       applicant: '',
       applicantId: '',
-      userId: 1,
+      userId: '',
+      image: '',
+      userAppl: '',
       toggleModalApplication: false,
 
       form: {
-        status_id: 1,
         title: '',
         description: '',
         date: '',
@@ -181,6 +215,9 @@ export default {
         city: '',
         address: '',
         user: {
+          id: 1
+        },
+        status: {
           id: 1
         }
       },
@@ -198,7 +235,6 @@ export default {
     onSubmit() {
       let data = {
         id: this.form.id,
-        status_id: 1,
         title: this.form.title,
         description: this.form.description,
         date: this.form.date,
@@ -207,6 +243,9 @@ export default {
         address: this.form.address,
         user: {
           id: localStorage.getItem('user_id')
+        },
+        status: {
+          id: 1
         }
       }
       api.updateJob(data)
@@ -232,12 +271,10 @@ export default {
     openModalApplication() {
       this.toggleModalApplication = !this.toggleModalApplication;
     },
-
     editJob(job) {
       this.modalShow = !this.modalShow;
       this.form = job;
     },
-
     deleteJob(index, jobId) {
       this.$confirm(
           {
@@ -267,11 +304,11 @@ export default {
           .then(res => {
             let unprocessedAppl = res.data
             unprocessedAppl.forEach(appl => {
-              if(appl.status.id != 5){
+              if (appl.status.id != 5) {
                 this.applications.push(appl)
               }
             })
-            })
+          })
           .catch(err => console.log(err));
       this.openModalApplication()
     },
@@ -292,11 +329,19 @@ export default {
           .then()
           .catch(err => console.log(err))
       this.applications.splice(index, 1)
-    }
-    ,
+    },
+    loadApplicantProfile(applicantId) {
+      api.getUser(applicantId)
+          .then(res => {
+            this.userAppl = res.data
+            if (!this.userAppl.image) {
+              this.userAppl.image = 'https://carnivalkids.com/sites/default/files/product_images/dsc_0192_12.jpg'
+            }
+          })
+    },
   },
   created() {
-    api.getEmployeePosts(this.userId)
+    api.getEmployeePosts(localStorage.getItem('user_id'))
         .then(res => this.employeePosts = res.data)
         .catch(err => console.log(err));
   }
@@ -334,7 +379,8 @@ a:hover {
   background-color: #cccfed;
   color: #333333 !important;
 }
-.scrolling{
+
+.scrolling {
   height: 20vw;
 }
 

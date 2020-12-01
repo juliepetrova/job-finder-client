@@ -3,13 +3,24 @@
     <div class=" emp-profile">
         <div class="row">
           <div class="col-md-3">
-            <div class="profile-img">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="ProfileImage"/>
-              <div class="file btn btn-lg btn-primary">
-                Change Photo
-                <input type="file" name="file"/>
+            <div class="profile-img mb-5 h-64">
+              <img class="object-contain"
+                   :src=" personalInfo.image "
+                   alt="ProfileImage"/>
+              <button v-if="!editImage" @click="editImage = !editImage"
+                      class="file rounded-full flex shadow-xl bg-gray-200 p-2">
+                <i class="far fa-edit text-gray-700"></i>
+              </button>
+              <div v-if="editImage" class="flex mt-1 mb-4">
+                <input
+                    class="w-full shadow border rounded py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                    v-model="personalInfo.image" type="text">
+                <button @click="saveImage"
+                        class="ml-2 btn-select hover:bg-purple-700 p-2 rounded-full shadow-md flex justify-center items-center focus:outline-none">
+                  <i class="fas fa-check"></i>
+                </button>
               </div>
-            </div>
+          </div>
           </div>
           <div class="col-md-7">
             <div class="profile-head">
@@ -67,20 +78,28 @@ export default {
     return {
       state: 1,
       modalShow: false,
-      personalInfo: []
+      personalInfo: [],
+      editImage: false,
     }
   },
   methods: {
     closeModal(e){
       this.modalShow = e;
       console.log(e);
+    },
+    saveImage(){
+      this.editImage = false
+      api.updateUser(this.personalInfo);
     }
 
   },
   created(){
     let user_id = localStorage.getItem("user_id");
     api.getUser(user_id)
-        .then(res => this.personalInfo = res.data)
+        .then(res => {this.personalInfo = res.data
+        if (!this.personalInfo.image){
+          this.personalInfo.image = 'https://carnivalkids.com/sites/default/files/product_images/dsc_0192_12.jpg'
+        }})
         .catch(err => console.log(err));
   },
 
@@ -171,12 +190,13 @@ body{
 .card{
   border: 0px;
 }
-/*.btn-try{*/
-/*  color: #fff;*/
-/*  background-color:  #4c58cf;*/
-/*  border-color:  #4c58cf;*/
 
-/*}*/
-
-
+.profile-img .file {
+  position: relative;
+  overflow: hidden;
+  margin-top: -10%;
+  padding: 22px;
+  font-size: 25px;
+  background: transparent;
+}
 </style>

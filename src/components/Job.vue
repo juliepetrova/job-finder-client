@@ -67,7 +67,7 @@
 <!--          <div class="flex">-->
             <div class="mx-auto mb-4">
               <img class="rounded-full h-32 w-32 object-cover mx-auto"
-                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                   :src=" user.image "
                    alt="ProfileImage"/>
             </div>
             <div class="text-2xl text-center"> Offered by: <br> <b>{{ user.first_name }} {{ user.last_name }} </b></div>
@@ -153,7 +153,10 @@ export default {
         .then(res => this.job = res.data)
         .catch(err => console.log(err));
     api.getUserByJob(this.$route.params.job_id)
-        .then(res => this.user = res.data)
+        .then(res => {this.user = res.data
+          if (!this.user.image){
+            this.user.image = 'https://carnivalkids.com/sites/default/files/product_images/dsc_0192_12.jpg'
+          }})
         .catch(err => console.log(err));
   }
 
