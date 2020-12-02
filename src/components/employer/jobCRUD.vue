@@ -7,17 +7,33 @@
     <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" shadow>
       <template>
         <div class="p-3">
-          <div class="mt-2 rounded-3xl shadow-inner p-4  ">
+          <div class=" shadow p-4  ">
             <div class="mx-auto mb-4">
               <img class="rounded-full h-32 w-32 object-cover mx-auto"
                    :src=" userAppl.image "
                    alt="ProfileImage"/>
             </div>
             <div class="text-center"> Applicant name: <br> <b>{{ userAppl.first_name }} {{ userAppl.last_name }} </b></div>
-            <div class="pt-4 px-4">
-                <p>Email: {{userAppl.email}}</p>
-              <p>City: {{userAppl.city}}</p>
-              <p>Country: {{userAppl.country}}</p>
+            <div class="pt-8 px-4 text-lg">
+              <h2 class="py-3"><i class="far fa-envelope"></i> {{userAppl.email}}</h2>
+              <h2 class="py-3"><i class="fas fa-university"></i> {{userAppl.city}}</h2>
+              <h2 class="py-3 mb-5"><i class="fas fa-globe-americas"></i> {{userAppl.country}}</h2>
+<!--             Skills -->
+              <div class="row">
+                <div class="pt-1 pl-3 pr-1 m-1 rounded-2xl mr-2">
+                  <label class="float-left pr-3">Skills: </label>
+                </div>
+              <div class="bg-purple-400 text-white pt-1 pl-3 pr-1 m-1 rounded-2xl mr-2 shadow-inner" v-bind:key="skill" v-for="(skill) in getSkills()">
+                <label class="float-left pr-3">{{ skill }}</label>
+              </div>
+              </div>
+
+              <div class="m-5"></div>
+              <a  :href="'mailto:' + userAppl.email"
+                  class=" mailtoui bg-indigo-300 hover:bg-purple-700 text-white font-bold py-3 px-4 m-3 rounded shadow-2xl focus:outline-none focus:shadow-outline"
+              >
+                Send email
+              </a>
             </div>
             <!--          <b-button variant="primary" block @click="hide">Close Sidebar</b-button>-->
           </div>
@@ -156,7 +172,7 @@
           <b-card class="text-secondary" v-bind:key="application.id" v-for="(application, index) in applications">
             <b-row class="text-center align-items-center">
               <b-col>
-                <b-button v-b-toggle.sidebar-no-header @click="loadApplicantProfile(application.applicant.id)"
+                <b-button v-b-toggle.sidebar-no-header @click="loadApplicantProfile(application)"
                           class="text-white rounded-full p-2 px-3 bg-purple-500">View Profile
                 </b-button>
               </b-col>
@@ -228,6 +244,15 @@ export default {
   },
 
   methods: {
+    getSkills() {
+      let skills = []
+      let allSkills = this.applicant.skills
+      if(allSkills) {
+        let res = allSkills.split(", ");
+        res.forEach(skill => skills.push(skill))
+      }
+      return skills
+    },
     reload() {
       this.modalShow = false;
       this.$forceUpdate();
@@ -330,13 +355,14 @@ export default {
           .catch(err => console.log(err))
       this.applications.splice(index, 1)
     },
-    loadApplicantProfile(applicantId) {
-      api.getUser(applicantId)
+    loadApplicantProfile(application) {
+      api.getUser(application.applicant.id)
           .then(res => {
             this.userAppl = res.data
             if (!this.userAppl.image) {
               this.userAppl.image = 'https://carnivalkids.com/sites/default/files/product_images/dsc_0192_12.jpg'
             }
+            this.applicant = application.applicant
           })
     },
   },
@@ -383,6 +409,7 @@ a:hover {
 .scrolling {
   height: 20vw;
 }
+
 
 
 </style>
