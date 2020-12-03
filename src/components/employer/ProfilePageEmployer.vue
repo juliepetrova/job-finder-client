@@ -16,34 +16,34 @@
                     class="w-full shadow border rounded py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                     v-model="personalInfo.image" type="text">
                 <button @click="saveImage"
-                        class="ml-2 btn-select hover:bg-purple-700 p-2 rounded-full shadow-md flex justify-center items-center focus:outline-none">
+                        class="ml-2 btn-select bg-gradient-to-r from-indigo-700	to-purple-900 hover:bg-purple-700 p-2 rounded-full shadow-md flex justify-center items-center focus:outline-none">
                   <i class="fas fa-check"></i>
                 </button>
               </div>
           </div>
           </div>
-          <div class="col-md-7">
+          <div class="col-md-3">
             <div class="profile-head">
-              <h3>
+              <h3 class="text-2xl pt-3 pl-3">
                 {{ personalInfo.first_name }} {{personalInfo.last_name}}
               </h3>
+              <div class="bg-gradient-to-r from-indigo-700	to-purple-900 mt-5 ml-4 w-32 h-32">
+                <h2 class="text-gray-200 text-center pt-4">Total jobs given:</h2>
+                <h1 class="text-center text-2xl pt-3 text-indigo-200">18</h1>
+              </div>
 
-              <p class="proile-rating">Rates : <span>8/10</span></p>
-              <p class="proile-rating">Jobs Given : <span>19</span></p>
-              <p class="proile-rating">Money spent : <span>300$</span></p>
             </div>
           </div>
-<!--          <div class="col-md-2">-->
-<!--            <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>-->
-<!--          </div>-->
+          <div class="col-md-6">
+          </div>
         </div>
         <div class="row">
           <div class="col-md-3">
-            <div class="categories">
-              <b-button class="btn-select w-100" @click="state = 1">Basic Information</b-button>
-              <b-button class="btn-select w-100" @click="state=2">Active Jobs</b-button>
-              <b-button class="btn-select w-100" @click="state=3">Past Jobs</b-button>
-              <b-button class="btn-select w-100" @click="modalShow = !modalShow">Add job offer</b-button>
+            <div class="categories ">
+              <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 1">Basic Information</b-button>
+              <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state=2">Active Jobs</b-button>
+              <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state=3">Past Jobs</b-button>
+              <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="modalShow = !modalShow">Add job offer</b-button>
             </div>
           </div>
           <CreateJob @closeModal="closeModal" v-bind:modalShow="modalShow"></CreateJob>
@@ -173,7 +173,6 @@ body{
   padding-bottom: 5%;
   padding-top: 5%;
   color: #fff;
-  background-color: #5b64c9;
   border-color: #5b64c9;
   border-radius: 0px;
 }

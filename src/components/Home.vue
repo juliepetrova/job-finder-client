@@ -33,7 +33,24 @@
         for your small tasks has never been simpler.</h1>
       <br>
       <div class="row separation-line mt-5"></div>
+      <br>
     </div>
+      <div class="row flex justify-content-center">
+        <div  class=" m-3  mx-5 p-4 border-4 border-indigo-200 bg-indigo-50 rounded-full w-56 h-56 shadow-md hover:shadow-2xl">
+          <h2 class="text-gray-600 text-center pt-4">All jobs</h2>
+          <h1 class="text-center text-4xl mt-1 pt-4 text-indigo-400">358</h1>
+        </div>
+        <div  class=" m-3  mx-5 p-4 border-4 border-indigo-200 bg-indigo-50 rounded-full w-56 h-56 shadow-md hover:shadow-2xl">
+          <h2 class="text-gray-600 text-center pt-4">Most popular city</h2>
+          <h1 class="text-center text-3xl mt-2 pt-4 text-indigo-500">Eindhoven</h1>
+        </div>
+        <div  class=" m-3  mx-5 p-4 border-4 border-indigo-200 bg-indigo-50 rounded-full w-56 h-56 shadow-md hover:shadow-2xl">
+          <h2 class="text-gray-600 text-center pt-4">Total money earned</h2>
+          <h1 class="text-center text-4xl mt-1 pt-4 text-indigo-600">3598$</h1>
+        </div>
+      </div>
+      <div class="row separation-line mt-5"></div>
+
     <!--    Two cards representing the different roles in the website-->
     <div class="m-5 pt-5 ">
       <div class="row flex justify-content-center ">
@@ -42,7 +59,7 @@
             <img class="" src="https://image.freepik.com/free-vector/job-hunt-concept-illustration_114360-436.jpg">
           </div>
           <div class="text">
-            <h2 class="py-3 text-center text-lg">Register as a Job Seeker</h2>
+            <h2 class="pt-3  pb-2 text-center text-lg">Register as a Job Seeker</h2>
             <span class="text-gray-500">
               A job seeker profile allows you to access and apply all jobs
               posted on the website. You can review and cancel your applications
@@ -64,7 +81,7 @@
             <!--            <img class="py-10" src="https://image.freepik.com/free-vector/online-job-interview_23-2148644501.jpg">-->
           </div>
           <div class="text">
-            <h2 class="py-3 text-center text-lg">Register as an Employer</h2>
+            <h2 class="mt-5 py-2 text-center text-lg">Register as an Employer</h2>
             <span class="text-gray-500">
               An employer profile allows you to post unlimited amount of jobs
               and have access to all applications so you can find the ideal candidate for the desired job.
