@@ -54,6 +54,9 @@ export default {
     updateStatusJob(jobId, statusId){
         return AXIOS.put("jobs/updateStatus/" + jobId + '/' + statusId)
     },
+    getHomePageStatistics(){
+        return AXIOS.get("jobs/statistics")
+    },
 
 
 
@@ -88,6 +91,9 @@ export default {
     },
     updateStatusApplication(applicationId, statusId){
         return AXIOS.put("applications/updateStatus/" + applicationId + '/' + statusId)
+    },
+    getStatistics(userId) {
+        return AXIOS.get("/applications/statistics/" + userId)
     },
 
 

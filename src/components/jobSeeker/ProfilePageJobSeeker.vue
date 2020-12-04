@@ -22,19 +22,21 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="profile-head">
             <h3 class="text-2xl pt-3 pl-3">
               {{ personalInfo.first_name }} {{personalInfo.last_name}}
             </h3>
             <div class="bg-gradient-to-r from-indigo-700	to-purple-900 mt-5 ml-4 w-32 h-32">
-              <h2 class="text-gray-200 text-center pt-4">Total jobs taken:</h2>
-              <h1 class="text-center text-2xl pt-3 text-indigo-200">18</h1>
+              <h2 class="text-gray-200 text-center pt-4">Total jobs applied:</h2>
+              <h1 class="text-center text-2xl pt-3 text-indigo-200">{{ applications.length }}</h1>
             </div>
 
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
+          <h2 class="pl-5">Last month earnings</h2>
+          <line-chart :data="chartData"></line-chart>
         </div>
 
       </div>
@@ -48,7 +50,7 @@
           </div>
         </div>
         <PersonalInformation v-if="state===1" v-bind:personalInfo="personalInfo"></PersonalInformation>
-        <ApplicationCRUD v-if="state===2"></ApplicationCRUD>
+        <ApplicationCRUD v-if="state===2" v-bind:applications="applications"></ApplicationCRUD>
         <Skills v-if="state===3" v-bind:applicantId="personalInfo.id"></Skills>
         <PastApplications v-if="state === 4"></PastApplications>
       </div>
@@ -79,14 +81,40 @@ export default {
     return {
       state: 1,
       personalInfo: [],
+      applications: [],
       editImage: false,
+      chartData: {}
     }
   },
   methods: {
     saveImage(){
       this.editImage = false
       api.updateUser(this.personalInfo);
+    },
+    getStatistics(userId){
+      let statistics = {}
+      api.getStatistics(userId)
+      .then(res => {
+        statistics = res.data
+        console.log(statistics)
+        statistics.forEach(application => {
+          this.chartData[application.job.date] = application.job.payment
+        })
+      })
+    },
+    getApplications() {
+      api.getApplications(localStorage.getItem("user_id"))
+          .then(res => {
+            let unprocessedAppl = res.data
+            unprocessedAppl.forEach(appl => {
+              if (appl.status.id != 2) {
+                this.applications.push(appl)
+              }
+            })
+          })
+          .catch(err => console.log(err));
     }
+
   },
   created() {
     let user_id = localStorage.getItem("user_id");
@@ -94,7 +122,10 @@ export default {
         .then(res => {this.personalInfo = res.data
           if (!this.personalInfo.image){
             this.personalInfo.image = 'https://carnivalkids.com/sites/default/files/product_images/dsc_0192_12.jpg'
-          }})
+          }
+          this.getStatistics(user_id)
+          this.getApplications()
+        })
         .catch(err => console.log(err));
   },
 

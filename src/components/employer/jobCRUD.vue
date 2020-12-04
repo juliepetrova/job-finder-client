@@ -210,11 +210,10 @@ import api from "@/components/backend-api";
 
 export default {
   name: 'JobCRUD',
-  props: ["employeePost"],
+  props: ["employeePosts"],
   components: {},
   data() {
     return {
-      employeePosts: [],
       applications: [],
       applicant: '',
       applicantId: '',
@@ -366,11 +365,6 @@ export default {
           })
     },
   },
-  created() {
-    api.getEmployeePosts(localStorage.getItem('user_id'))
-        .then(res => this.employeePosts = res.data)
-        .catch(err => console.log(err));
-  }
 
 }
 </script>

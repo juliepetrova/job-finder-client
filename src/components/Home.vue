@@ -38,15 +38,15 @@
       <div class="row flex justify-content-center">
         <div  class=" m-3  mx-5 p-4 border-4 border-indigo-200 bg-indigo-50 rounded-full w-56 h-56 shadow-md hover:shadow-2xl">
           <h2 class="text-gray-600 text-center pt-4">All jobs</h2>
-          <h1 class="text-center text-4xl mt-1 pt-4 text-indigo-400">358</h1>
+          <h1 class="text-center text-4xl mt-1 pt-4 text-indigo-400">{{ statistics.allJobs }}</h1>
         </div>
         <div  class=" m-3  mx-5 p-4 border-4 border-indigo-200 bg-indigo-50 rounded-full w-56 h-56 shadow-md hover:shadow-2xl">
           <h2 class="text-gray-600 text-center pt-4">Most popular city</h2>
-          <h1 class="text-center text-3xl mt-2 pt-4 text-indigo-500">Eindhoven</h1>
+          <h1 class="text-center text-3xl mt-2 pt-4 text-indigo-500"> {{statistics.mostPopularCity}}</h1>
         </div>
         <div  class=" m-3  mx-5 p-4 border-4 border-indigo-200 bg-indigo-50 rounded-full w-56 h-56 shadow-md hover:shadow-2xl">
           <h2 class="text-gray-600 text-center pt-4">Total money earned</h2>
-          <h1 class="text-center text-4xl mt-1 pt-4 text-indigo-600">3598$</h1>
+          <h1 class="text-center text-4xl mt-1 pt-4 text-indigo-600">{{ statistics.totalEarnings }} €</h1>
         </div>
       </div>
       <div class="row separation-line mt-5"></div>
@@ -101,8 +101,20 @@
 </template>
 
 <script>
+import api from "@/components/backend-api";
+
 export default {
-  name: "Home"
+  name: "Home",
+  data() {
+    return {
+      statistics: ''
+    }
+  },
+  created() {
+    api.getHomePageStatistics()
+    .then(res => this.statistics = res.data)
+    .catch(err => console.log(err))
+  }
 }
 </script>
 
