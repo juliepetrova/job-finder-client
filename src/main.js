@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import VueConfirmDialog from 'vue-confirm-dialog'
 import VueChartkick from "vue-chartkick";
 import Chart from 'chart.js'
+import moment from "moment";
 
 
 Vue.config.productionTip = false
@@ -18,6 +19,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 Vue.use(VueConfirmDialog)
 Vue.use(VueChartkick.use(Chart))
+Vue.use(moment)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 
 Vue.prototype.$http = axios;

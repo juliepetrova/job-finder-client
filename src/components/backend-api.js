@@ -104,7 +104,10 @@ export default {
     },
     updateApplicant(applicant){
         return AXIOS.put("users/applicant", applicant)
-    }
+    },
+    updateRating(applicantId, rating){
+      return AXIOS.put("users/applicant/"+ applicantId + '/' + rating)
+    },
 
 
 

@@ -16,9 +16,9 @@
       <div class="flex flex-wrap justify-end">
         <div>
           <fieldset class="border-b border-black p-0 mr-5">
-            <input v-model="search" class="bg-transparent p-3 m-0 w-64 active:border-0 focus:outline-none"
-                   placeholder="Search by city">
-            <button class="float-right mr-2 pt-3"><i class="fas fa-search"></i></button>
+            <input v-model="searchCity" class="bg-transparent p-3 m-0 w-64 active:border-0 focus:outline-none"
+                   placeholder="Search by city" @input="page = 1; retrieveJobs();" >
+            <button  @click="page = 1; retrieveJobs();" class="float-right mr-2 pt-3"><i class="fas fa-search"></i></button>
           </fieldset>
         </div>
         <div class="sort mr-40">
@@ -49,7 +49,7 @@
 
     <b-card-group class="m-5 text-center d-flex justify-content-center">
 
-      <div v-bind:key="jobPost.id" v-for="jobPost in filteredList">
+      <div v-bind:key="jobPost.id" v-for="jobPost in jobPosts">
         <JobCard v-bind:jobPost="jobPost"></JobCard>
       </div>
 

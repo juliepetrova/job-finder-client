@@ -60,23 +60,26 @@
             <b-col><b>Applicants</b></b-col>
           </b-row>
         </b-card>
-        <b-card class="crudCard text-secondary" v-bind:key="employeePost.id"
-                v-for="(employeePost, index) in employeePosts">
+        <b-card class="crudCard text-secondary" v-bind:key="job.id"
+                v-for="(job, index) in employeePosts">
           <b-row>
-            <b-col>{{ employeePost.title }}</b-col>
-            <b-col>{{ employeePost.payment }}$</b-col>
-            <b-col>{{ employeePost.date }}</b-col>
+            <b-col>{{ job.title }}</b-col>
+            <b-col>{{ job.payment }}$</b-col>
+            <b-col>{{ job.date }}</b-col>
             <b-col>
-              <button @click="editJob(employeePost)" class="color-primary text-white rounded-full p-2 px-3"><i
+              <button @click="editJob(job)" class="color-primary text-white rounded-full p-2 px-3"><i
                   class="far fa-edit"></i></button>
             </b-col>
             <b-col>
-              <button @click="deleteJob(index, employeePost.id)" class="text-white rounded-full p-2 px-3 bg-red-400"><i
+              <button @click="deleteJob(index, job.id)" class="text-white rounded-full p-2 px-3 bg-red-400"><i
                   class="far fa-trash-alt"></i></button>
             </b-col>
             <b-col>
-              <button @click="getApplications(employeePost.id)" class="text-white rounded-full p-2 px-3 bg-yellow-500">
+              <button v-if="job.status.id != 4" @click="getApplications(job.id)" class="text-white rounded-full p-2 px-3 bg-yellow-500">
                 View
+              </button>
+              <button v-if="job.status.id === 4" @click="rateApplicant(job.id)" class="text-white rounded-full p-2 px-3 bg-green-500">
+                Rate user
               </button>
             </b-col>
           </b-row>
@@ -112,7 +115,7 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Job date</label>
                 <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="date" v-model="form.date" required type="text" placeholder="Enter job date">
+                    id="date" v-model="form.date" required type="text" placeholder="Enter job date (MM-DD-YYYY)">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="payment">Payment amount</label>
@@ -205,7 +208,7 @@
 
 <script>
 
-
+import moment from 'moment'
 import api from "@/components/backend-api";
 
 export default {
@@ -257,11 +260,12 @@ export default {
       this.$forceUpdate();
     },
     onSubmit() {
+      let dateFormatted = moment(String(this.form.date)).format('YYYY-MM-DD')
       let data = {
         id: this.form.id,
         title: this.form.title,
         description: this.form.description,
-        date: this.form.date,
+        date: dateFormatted,
         payment: this.form.payment,
         city: this.form.city,
         address: this.form.address,
@@ -341,7 +345,8 @@ export default {
       api.updateStatusApplication(applicationId, 3)
           .then()
           .catch(err => console.log(err))
-      api.updateStatusJob(jobId, 2)
+      // Change to in progress
+      api.updateStatusJob(jobId, 4)
           .then()
           .catch(err => console.log(err))
       this.toggleModalApplication = !this.toggleModalApplication
@@ -363,6 +368,17 @@ export default {
             }
             this.applicant = application.applicant
           })
+    },
+    rateApplicant(jobId){
+      //create a field for submitting rating
+      //TODO get applicant and update rating
+      // api.updateRating(applicantId, rating)
+      // .then()
+      // .catch(err => console.log(err))
+      // Change to in completed
+      api.updateStatusJob(jobId, 2)
+          .then()
+          .catch(err => console.log(err))
     },
   },
 
