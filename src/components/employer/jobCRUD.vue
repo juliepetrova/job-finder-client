@@ -78,9 +78,20 @@
               <button v-if="job.status.id != 4" @click="getApplications(job.id)" class="text-white rounded-full p-2 px-3 bg-yellow-500">
                 View
               </button>
-              <button v-if="job.status.id === 4" @click="rateApplicant(job.id)" class="text-white rounded-full p-2 px-3 bg-green-500">
+              <button v-if="job.status.id === 4 && !toggleModalRating" @click="toggleModalRating = !toggleModalRating" class="text-white rounded-full p-2 px-3 bg-green-500">
                 Rate user
               </button>
+              <div class="flex">
+<!--                <div class="row">-->
+                <input v-if="job.status.id === 4 && toggleModalRating"
+                       class="flex-initial shadow appearance-none border rounded-full m-1 py-2 px-3 text-gray-700 w-1/2 leading-tight focus:outline-none bg-purple-100"
+                       v-model="rating">
+                <button v-if="job.status.id === 4 && toggleModalRating" @click="rateApplicant(job, rating)"
+                        class="flex-initial rounded-full h-8 w-8 shadow-md flex m-1 justify-center items-center bg-purple-100 hover:bg-purple-200 focus:outline-none font-light text-purple-500">
+                  <i class="fas fa-check"></i>
+                </button>
+<!--              </div>-->
+              </div>
             </b-col>
           </b-row>
         </b-card>
@@ -223,7 +234,9 @@ export default {
       userId: '',
       image: '',
       userAppl: '',
+      rating: '',
       toggleModalApplication: false,
+      toggleModalRating: false,
 
       form: {
         title: '',
@@ -369,14 +382,24 @@ export default {
             this.applicant = application.applicant
           })
     },
-    rateApplicant(jobId){
-      //create a field for submitting rating
+    rateApplicant(job, rating){
       //TODO get applicant and update rating
-      // api.updateRating(applicantId, rating)
-      // .then()
-      // .catch(err => console.log(err))
+      let applic = {}
+      api.getApplicationsByJobId(job.id)
+          .then(res => {
+            let unprocessedAppl = res.data
+            applic = unprocessedAppl.find(appl => appl.status.id === 3)
+            console.log(applic)
+            rating = parseInt(rating)
+            console.log(rating)
+            this.toggleModalRating = false
+      api.updateRating(applic.applicant.id, rating)
+      .then()
+      .catch(err => console.log(err))
+          })
+          .catch(err => console.log(err));
       // Change to in completed
-      api.updateStatusJob(jobId, 2)
+      api.updateStatusJob(job.id, 2)
           .then()
           .catch(err => console.log(err))
     },
