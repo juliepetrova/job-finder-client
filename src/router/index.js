@@ -18,6 +18,7 @@ const routes = [
             requiresAuth: true
         }},
     { path: '/posts', component: jobPosts},
+    { path: '/posts/:city', component: jobPosts},
     { path: '/login', component: LogIn},
     { path: '/signup', component: Registration},
     { path: '/jobSeeker/myProfile', component: ProfilePageJobSeeker,

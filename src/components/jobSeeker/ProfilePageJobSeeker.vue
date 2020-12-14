@@ -27,6 +27,9 @@
             <h3 class="text-2xl pt-3 pl-3">
               {{ personalInfo.first_name }} {{personalInfo.last_name}}
             </h3>
+            <h3 class="text-xl text-gray-600 pt-4 pl-3">
+              My rating: {{applicant.rating}}/10
+            </h3>
             <div class="bg-gradient-to-r from-indigo-700	to-purple-900 mt-5 ml-4 w-32 h-32">
               <h2 class="text-gray-200 text-center pt-4">Total jobs applied:</h2>
               <h1 class="text-center text-2xl pt-3 text-indigo-200">{{ applications.length }}</h1>
@@ -45,8 +48,8 @@
           <div class="categories">
             <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 1">Basic Information</b-button>
             <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 3">Skills</b-button>
-            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 4">Past experience</b-button>
             <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state=2">Active Applications</b-button>
+            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 4">Past experience</b-button>
           </div>
         </div>
         <PersonalInformation v-if="state===1" v-bind:personalInfo="personalInfo"></PersonalInformation>
@@ -82,6 +85,7 @@ export default {
       state: 1,
       personalInfo: [],
       applications: [],
+      applicant: '',
       editImage: false,
       chartData: {}
     }
@@ -113,6 +117,13 @@ export default {
             })
           })
           .catch(err => console.log(err));
+    },
+    getApplicant(user_id){
+      api.getApplicant(user_id)
+          .then(res => {
+            this.applicant = res.data
+          })
+          .catch(err => console.log(err))
     }
 
   },
@@ -125,6 +136,7 @@ export default {
           }
           this.getStatistics(user_id)
           this.getApplications()
+          this.getApplicant(user_id)
         })
         .catch(err => console.log(err));
   },

@@ -141,6 +141,9 @@ export default {
   },
 
   created() {
+    if(this.$route.params.city){
+      this.searchCity = this.$route.params.city
+    }
     const params = this.getRequestParams(
         this.searchCity,
         this.page,
