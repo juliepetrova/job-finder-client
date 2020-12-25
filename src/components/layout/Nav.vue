@@ -27,6 +27,11 @@
         </button>
         <ul class="dropdown-menu absolute hidden text-gray-700 ">
           <li class="">
+            <router-link v-if="isLoggedIn  && (role==='ADMIN')" to="/admin/dashboard" class="sm:mr-8">
+              <h2 class="px-4 text-gray-700 rounded ">Dashboard</h2>
+            </router-link>
+          </li>
+          <li class="">
             <router-link v-if="isLoggedIn  && (role==='POSTER')" to="/employer/myProfile" class="sm:mr-8">
               <h2 class="px-4 text-gray-700 rounded ">My profile</h2>
             </router-link>

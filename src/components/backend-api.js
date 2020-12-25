@@ -109,6 +109,15 @@ export default {
       return AXIOS.put("users/applicant/"+ applicantId + '/' + rating)
     },
 
+    // Report
+
+    reportJob(form){
+        return AXIOS.post('reports', form)
+    },
+    getReports(){
+        return AXIOS.get('reports')
+    },
+
 
 
 }

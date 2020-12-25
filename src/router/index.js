@@ -8,12 +8,17 @@ import LogIn from "@/components/authentication/LogIn";
 import Registration from "@/components/authentication/Registration";
 import Home from "@/components/Home";
 import Job from "@/components/Job";
+import Dashboard from "@/components/admin/Dashboard";
 
 Vue.use(VueRouter)
 
 
 const routes = [
     { path: '/employer/myProfile', component:ProfilePageEmployer,
+        meta: {
+            requiresAuth: true
+        }},
+    { path: '/admin/dashboard', component:Dashboard,
         meta: {
             requiresAuth: true
         }},
