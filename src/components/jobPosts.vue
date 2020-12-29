@@ -17,8 +17,9 @@
         <div>
           <fieldset class="border-b border-black p-0 mr-5">
             <input v-model="searchCity" class="bg-transparent p-3 m-0 w-64 active:border-0 focus:outline-none"
-                   placeholder="Search by city" @input="page = 1; retrieveJobs();" >
-            <button  @click="page = 1; retrieveJobs();" class="float-right mr-2 pt-3"><i class="fas fa-search"></i></button>
+                   placeholder="Search by city" @input="page = 1; retrieveJobs();">
+            <button @click="page = 1; retrieveJobs();" class="float-right mr-2 pt-3"><i class="fas fa-search"></i>
+            </button>
           </fieldset>
         </div>
         <div class="sort mr-40">
@@ -56,25 +57,27 @@
     </b-card-group>
 
     <b-pagination class="m-5 text-center d-flex justify-content-center"
-        v-model="page"
-        :total-rows="count"
-        :per-page="pageSize"
-        prev-text="Prev"
-        next-text="Next"
-        @change="handlePageChange"
+                  v-model="page"
+                  :total-rows="count"
+                  :per-page="pageSize"
+                  prev-text="Prev"
+                  next-text="Next"
+                  @change="handlePageChange"
     ></b-pagination>
-
+    <Footer></Footer>
   </div>
 
 </template>
 
 <script>
+import Footer from "@/components/layout/Footer";
 import JobCard from './jobCard.vue'
 import api from "@/components/backend-api";
 
 export default {
   name: 'JobPosts',
   components: {
+    Footer,
     JobCard,
   },
 
@@ -120,28 +123,28 @@ export default {
       }
     },
 
-  handlePageChange(value) {
-    this.page = value;
-    this.retrieveJobs();
-  },
-  retrieveJobs(){
-    const params = this.getRequestParams(
-        this.searchCity,
-        this.page,
-        this.pageSize
-    );
-    api.getJobPosts(params)
-        .then(res => {
-          const { jobs, totalItems } = res.data;
-          this.jobPosts = jobs
-          this.count = totalItems
-    })
-        .catch(err => console.log(err));
-  }
+    handlePageChange(value) {
+      this.page = value;
+      this.retrieveJobs();
+    },
+    retrieveJobs() {
+      const params = this.getRequestParams(
+          this.searchCity,
+          this.page,
+          this.pageSize
+      );
+      api.getJobPosts(params)
+          .then(res => {
+            const {jobs, totalItems} = res.data;
+            this.jobPosts = jobs
+            this.count = totalItems
+          })
+          .catch(err => console.log(err));
+    }
   },
 
   created() {
-    if(this.$route.params.city){
+    if (this.$route.params.city) {
       this.searchCity = this.$route.params.city
     }
     const params = this.getRequestParams(
@@ -151,7 +154,7 @@ export default {
     );
     api.getJobPosts(params)
         .then(res => {
-          const { jobs, totalItems } = res.data;
+          const {jobs, totalItems} = res.data;
           this.jobPosts = jobs
           this.count = totalItems
         })

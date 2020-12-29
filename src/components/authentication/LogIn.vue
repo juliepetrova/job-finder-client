@@ -75,6 +75,8 @@ export default {
               this.$router.push('/employer/myProfile')
             } else if (localStorage.getItem('role') === 'SEEKER') {
               this.$router.push('/jobSeeker/myProfile')
+            } else if (localStorage.getItem('role') === 'ADMIN') {
+              this.$router.push('/admin/dashboard')
             }
             console.log(localStorage.getItem('role'))
           })

@@ -14,7 +14,7 @@
             <div v-if="editImage" class="flex mt-1 mb-4">
               <input
                   class="w-full shadow border rounded py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-                   v-model="personalInfo.image" type="text">
+                  v-model="personalInfo.image" type="text">
               <button @click="saveImage"
                       class="ml-2 btn-select bg-gradient-to-r from-indigo-700	to-purple-900 hover:bg-purple-700 p-2 rounded-full shadow-md flex justify-center items-center focus:outline-none">
                 <i class="fas fa-check"></i>
@@ -25,10 +25,10 @@
         <div class="col-md-2">
           <div class="profile-head">
             <h3 class="text-2xl pt-3 pl-3">
-              {{ personalInfo.first_name }} {{personalInfo.last_name}}
+              {{ personalInfo.first_name }} {{ personalInfo.last_name }}
             </h3>
             <h3 class="text-xl text-gray-600 pt-4 pl-3">
-              My rating: {{applicant.rating}}/10
+              My rating: {{ applicant.rating }}/10
             </h3>
             <div class="bg-gradient-to-r from-indigo-700	to-purple-900 mt-5 ml-4 w-32 h-32">
               <h2 class="text-gray-200 text-center pt-4">Total jobs applied:</h2>
@@ -46,10 +46,18 @@
       <div class="row">
         <div class="col-md-3">
           <div class="categories">
-            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 1">Basic Information</b-button>
-            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 3">Skills</b-button>
-            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state=2">Active Applications</b-button>
-            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 4">Past experience</b-button>
+            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 1">Basic
+              Information
+            </b-button>
+            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 3">
+              Skills
+            </b-button>
+            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state=2">Active
+              Applications
+            </b-button>
+            <b-button class="btn-select w-100 bg-gradient-to-r from-indigo-700	to-purple-900" @click="state = 4">Past
+              experience
+            </b-button>
           </div>
         </div>
         <PersonalInformation v-if="state===1" v-bind:personalInfo="personalInfo"></PersonalInformation>
@@ -59,12 +67,12 @@
       </div>
 
     </div>
-
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-
+import Footer from "@/components/layout/Footer";
 import PersonalInformation from "@/components/personalInformation";
 import ApplicationCRUD from "@/components/jobSeeker/applicationCRUD";
 import Skills from "@/components/jobSeeker/skills";
@@ -75,6 +83,7 @@ import api from "@/components/backend-api";
 export default {
   name: 'ProfilePageJobSeeker',
   components: {
+    Footer,
     PersonalInformation,
     ApplicationCRUD,
     Skills,
@@ -91,20 +100,20 @@ export default {
     }
   },
   methods: {
-    saveImage(){
+    saveImage() {
       this.editImage = false
       api.updateUser(this.personalInfo);
     },
-    getStatistics(userId){
+    getStatistics(userId) {
       let statistics = {}
       api.getStatistics(userId)
-      .then(res => {
-        statistics = res.data
-        console.log(statistics)
-        statistics.forEach(application => {
-          this.chartData[application.job.date] = application.job.payment
-        })
-      })
+          .then(res => {
+            statistics = res.data
+            console.log(statistics)
+            statistics.forEach(application => {
+              this.chartData[application.job.date] = application.job.payment
+            })
+          })
     },
     getApplications() {
       api.getApplications(localStorage.getItem("user_id"))
@@ -118,7 +127,7 @@ export default {
           })
           .catch(err => console.log(err));
     },
-    getApplicant(user_id){
+    getApplicant(user_id) {
       api.getApplicant(user_id)
           .then(res => {
             this.applicant = res.data
@@ -130,8 +139,9 @@ export default {
   created() {
     let user_id = localStorage.getItem("user_id");
     api.getUser(user_id)
-        .then(res => {this.personalInfo = res.data
-          if (!this.personalInfo.image){
+        .then(res => {
+          this.personalInfo = res.data
+          if (!this.personalInfo.image) {
             this.personalInfo.image = 'https://carnivalkids.com/sites/default/files/product_images/dsc_0192_12.jpg'
           }
           this.getStatistics(user_id)

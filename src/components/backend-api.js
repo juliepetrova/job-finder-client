@@ -117,6 +117,12 @@ export default {
     getReports(){
         return AXIOS.get('reports')
     },
+    deleteReport(id){
+        return AXIOS.delete('reports/' + id)
+    },
+    getReportById(id){
+        return AXIOS.get('reports/' + id)
+    }
 
 
 

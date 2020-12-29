@@ -63,12 +63,12 @@
       </div>
 
     </div>
-
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-
+import Footer from "@/components/layout/Footer";
 import CreateJob from "@/components/employer/createJob";
 import JobCRUD from "@/components/employer/jobCRUD";
 import PersonalInformation from "@/components/personalInformation";
@@ -79,6 +79,7 @@ import api from "@/components/backend-api";
 export default {
   name: 'ProfilePageEmployer',
   components: {
+    Footer,
     JobCRUD,
     CreateJob,
     PersonalInformation,
