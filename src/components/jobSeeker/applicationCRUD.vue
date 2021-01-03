@@ -46,11 +46,10 @@ import api from "@/components/backend-api";
 
 export default {
   name: 'ApplicationCRUD',
-  props: ["employeePost"],
+  props: ['applications'],
   components: {},
   data() {
     return {
-      applications: [],
       status: '',
       userId: localStorage.getItem("user_id"),
     }
@@ -102,19 +101,19 @@ export default {
       )
     },
   },
-    created() {
-      api.getApplications(this.userId)
-          .then(res => {
-            let unprocessedAppl = res.data
-            unprocessedAppl.forEach(appl => {
-              if (appl.status.id != 2) {
-                this.applications.push(appl)
-              }
-            })
-            // this.applications = res.data
-          })
-          .catch(err => console.log(err));
-    }
+    // created() {
+    //   api.getApplications(this.userId)
+    //       .then(res => {
+    //         let unprocessedAppl = res.data
+    //         unprocessedAppl.forEach(appl => {
+    //           if (appl.status.id != 2) {
+    //             this.applications.push(appl)
+    //           }
+    //         })
+    //         // this.applications = res.data
+    //       })
+    //       .catch(err => console.log(err));
+    // }
 
 }
 </script>

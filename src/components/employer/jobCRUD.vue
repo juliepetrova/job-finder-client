@@ -3,6 +3,45 @@
 
     <vue-confirm-dialog></vue-confirm-dialog>
 
+    <!--    Sidebar applicant profile-->
+    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" shadow>
+      <template>
+        <div class="p-3">
+          <div class=" shadow p-4  ">
+            <div class="mx-auto mb-4">
+              <img class="rounded-full h-32 w-32 object-cover mx-auto"
+                   :src=" userAppl.image "
+                   alt="ProfileImage"/>
+            </div>
+            <div class="text-center"> Applicant name: <br> <b>{{ userAppl.first_name }} {{ userAppl.last_name }} </b></div>
+            <div class="pt-8 px-4 text-lg">
+              <h2 class="py-3"><i class="far fa-envelope"></i> {{userAppl.email}}</h2>
+              <h2 class="py-3"><i class="fas fa-university"></i> {{userAppl.city}}</h2>
+              <h2 class="py-3 mb-5"><i class="fas fa-globe-americas"></i> {{userAppl.country}}</h2>
+<!--             Skills -->
+              <div class="row">
+                <div class="pt-1 pl-3 pr-1 m-1 rounded-2xl mr-2">
+                  <label class="float-left pr-3">Skills: </label>
+                </div>
+              <div class="bg-purple-400 text-white pt-1 pl-3 pr-1 m-1 rounded-2xl mr-2 shadow-inner" v-bind:key="skill" v-for="(skill) in getSkills()">
+                <label class="float-left pr-3">{{ skill }}</label>
+              </div>
+              </div>
+
+              <div class="m-5"></div>
+              <a  :href="'mailto:' + userAppl.email"
+                  class=" mailtoui bg-indigo-300 hover:bg-purple-700 text-white font-bold py-3 px-4 m-3 rounded shadow-2xl focus:outline-none focus:shadow-outline"
+              >
+                Send email
+              </a>
+            </div>
+            <!--          <b-button variant="primary" block @click="hide">Close Sidebar</b-button>-->
+          </div>
+        </div>
+      </template>
+    </b-sidebar>
+    <!--    End Sidebar-->
+
     <b-card body-class="text-center" header-tag="nav">
       <template v-slot:header>
         <b-nav card-header tabs>
@@ -21,23 +60,38 @@
             <b-col><b>Applicants</b></b-col>
           </b-row>
         </b-card>
-        <b-card class="crudCard text-secondary" v-bind:key="employeePost.id" v-for="(employeePost, index) in employeePosts">
+        <b-card class="crudCard text-secondary" v-bind:key="job.id"
+                v-for="(job, index) in employeePosts">
           <b-row>
-            <b-col>{{ employeePost.title }}</b-col>
-            <b-col>{{ employeePost.payment }}$</b-col>
-            <b-col>{{ employeePost.date }}</b-col>
+            <b-col>{{ job.title }}</b-col>
+            <b-col>{{ job.payment }}$</b-col>
+            <b-col>{{ job.date }}</b-col>
             <b-col>
-              <button @click="editJob(employeePost)" class="color-primary text-white rounded-full p-2 px-3"><i
+              <button @click="editJob(job)" class="color-primary text-white rounded-full p-2 px-3"><i
                   class="far fa-edit"></i></button>
             </b-col>
             <b-col>
-              <button @click="deleteJob(index, employeePost.id)" class="text-white rounded-full p-2 px-3 bg-red-400"><i
+              <button @click="deleteJob(index, job.id)" class="text-white rounded-full p-2 px-3 bg-red-400"><i
                   class="far fa-trash-alt"></i></button>
             </b-col>
             <b-col>
-              <button @click="getApplications(employeePost.id)" class="text-white rounded-full p-2 px-3 bg-yellow-500">
+              <button v-if="job.status.id != 4" @click="getApplications(job.id)" class="text-white rounded-full p-2 px-3 bg-yellow-500">
                 View
               </button>
+              <button v-if="job.status.id === 4 && !toggleModalRating" @click="toggleModalRating = !toggleModalRating" class="text-white rounded-full p-2 px-3 bg-green-500">
+                Rate user
+              </button>
+              <div class="flex">
+<!--                <div class="row">-->
+                <input v-if="job.status.id === 4 && toggleModalRating"
+                       class="flex-initial shadow appearance-none border rounded-full m-1 py-2 px-3 text-gray-700 w-1/2 leading-tight focus:outline-none bg-purple-100"
+                       v-model="rating">
+                <button v-if="job.status.id === 4 && toggleModalRating" @click="rateApplicant(job, rating)"
+                        class="flex-initial rounded-full h-8 w-8 shadow-md flex m-1 justify-center items-center bg-purple-100 hover:bg-purple-200 focus:outline-none font-light text-purple-500">
+                  <i class="fas fa-check"></i>
+                </button>
+<!--              </div>-->
+              </div>
             </b-col>
           </b-row>
         </b-card>
@@ -57,38 +111,47 @@
                   class="bg-white rounded px-8 pt-6 pb-8 mb-4 ">
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Job title</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="title" v-model="form.title" required type="text" placeholder="Enter job title">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Job description</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="description" v-model="form.description" required type="text" placeholder="Enter job description">
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="description" v-model="form.description" required type="text"
+                    placeholder="Enter job description">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Job date</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="date" v-model="form.date" required type="text" placeholder="Enter job date">
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="date" v-model="form.date" required type="text" placeholder="Enter job date (MM-DD-YYYY)">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="payment">Payment amount</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="payment" v-model="form.payment" required type="text" placeholder="Enter payment">
-              </div>             <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2" for="city">City</label>
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                     id="city" v-model="form.city" required type="text" placeholder="Enter your city">
-            </div>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="payment" v-model="form.payment" required type="text" placeholder="Enter payment">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="city">City</label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="city" v-model="form.city" required type="text" placeholder="Enter your city">
+              </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="address">Address</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="address" v-model="form.address" required type="text" placeholder="Enter your address">
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="address" v-model="form.address" required type="text" placeholder="Enter your address">
               </div>
 
               <div class="mb-4 hidden">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="id">Job id</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       id="id" v-model="form.id" required>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="id" v-model="form.id" required>
               </div>
               <div class="flex items-center justify-between">
                 <button
@@ -121,22 +184,22 @@
         <div class="bg-white w-full rounded shadow-2xl flex flex-col p-5">
           <div class="text-2xl font-bold text-center">View all applications</div>
           <b-card class="text-secondary" v-bind:key="application.id" v-for="(application, index) in applications">
-            <b-row class="text-center">
+            <b-row class="text-center align-items-center">
               <b-col>
-                <div class="mx-auto mb-4">
-                  <img class="rounded-full h-20 w-20 object-cover mx-auto"
-                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                       alt="ProfileImage"/>
-                </div>
+                <b-button v-b-toggle.sidebar-no-header @click="loadApplicantProfile(application)"
+                          class="text-white rounded-full p-2 px-3 bg-purple-500">View Profile
+                </b-button>
               </b-col>
-              <b-col>Name</b-col>
-              <b-col>{{ application.description }}</b-col>
+              <b-col>{{ application.applicant.rating }}/ 10 <i class="far fa-star"></i></b-col>
+              <b-col cols="5">{{ application.description }}</b-col>
               <b-col>
-                <button @click="accept(application.id, application.job.id)" class="text-white rounded-full p-2 px-3 bg-green-500">Accept
+                <button @click="accept(application.id, application.job.id)"
+                        class="text-white rounded-full p-2 px-3 bg-green-500">Accept
                 </button>
               </b-col>
               <b-col>
-                <button @click="decline(index, application.id)" class="text-white rounded-full p-2 px-3 bg-red-400">Decline
+                <button @click="decline(index, application.id)" class="text-white rounded-full p-2 px-3 bg-red-400">
+                  Decline
                 </button>
               </b-col>
 
@@ -156,24 +219,26 @@
 
 <script>
 
-
+import moment from 'moment'
 import api from "@/components/backend-api";
 
 export default {
   name: 'JobCRUD',
-  props: ["employeePost"],
+  props: ["employeePosts"],
   components: {},
   data() {
     return {
-      employeePosts: [],
       applications: [],
       applicant: '',
       applicantId: '',
-      userId: 1,
+      userId: '',
+      image: '',
+      userAppl: '',
+      rating: '',
       toggleModalApplication: false,
+      toggleModalRating: false,
 
       form: {
-        status_id: 1,
         title: '',
         description: '',
         date: '',
@@ -181,6 +246,9 @@ export default {
         city: '',
         address: '',
         user: {
+          id: 1
+        },
+        status: {
           id: 1
         }
       },
@@ -191,22 +259,34 @@ export default {
   },
 
   methods: {
+    getSkills() {
+      let skills = []
+      let allSkills = this.applicant.skills
+      if(allSkills) {
+        let res = allSkills.split(", ");
+        res.forEach(skill => skills.push(skill))
+      }
+      return skills
+    },
     reload() {
       this.modalShow = false;
       this.$forceUpdate();
     },
     onSubmit() {
+      let dateFormatted = moment(String(this.form.date)).format('YYYY-MM-DD')
       let data = {
         id: this.form.id,
-        status_id: 1,
         title: this.form.title,
         description: this.form.description,
-        date: this.form.date,
+        date: dateFormatted,
         payment: this.form.payment,
         city: this.form.city,
         address: this.form.address,
         user: {
           id: localStorage.getItem('user_id')
+        },
+        status: {
+          id: 1
         }
       }
       api.updateJob(data)
@@ -232,12 +312,10 @@ export default {
     openModalApplication() {
       this.toggleModalApplication = !this.toggleModalApplication;
     },
-
     editJob(job) {
       this.modalShow = !this.modalShow;
       this.form = job;
     },
-
     deleteJob(index, jobId) {
       this.$confirm(
           {
@@ -267,11 +345,11 @@ export default {
           .then(res => {
             let unprocessedAppl = res.data
             unprocessedAppl.forEach(appl => {
-              if(appl.status.id != 5){
+              if (appl.status.id != 5) {
                 this.applications.push(appl)
               }
             })
-            })
+          })
           .catch(err => console.log(err));
       this.openModalApplication()
     },
@@ -280,7 +358,8 @@ export default {
       api.updateStatusApplication(applicationId, 3)
           .then()
           .catch(err => console.log(err))
-      api.updateStatusJob(jobId, 2)
+      // Change to in progress
+      api.updateStatusJob(jobId, 4)
           .then()
           .catch(err => console.log(err))
       this.toggleModalApplication = !this.toggleModalApplication
@@ -292,14 +371,39 @@ export default {
           .then()
           .catch(err => console.log(err))
       this.applications.splice(index, 1)
-    }
-    ,
+    },
+    loadApplicantProfile(application) {
+      api.getUser(application.applicant.id)
+          .then(res => {
+            this.userAppl = res.data
+            if (!this.userAppl.image) {
+              this.userAppl.image = 'https://carnivalkids.com/sites/default/files/product_images/dsc_0192_12.jpg'
+            }
+            this.applicant = application.applicant
+          })
+    },
+    rateApplicant(job, rating){
+      //TODO get applicant and update rating
+      let applic = {}
+      api.getApplicationsByJobId(job.id)
+          .then(res => {
+            let unprocessedAppl = res.data
+            applic = unprocessedAppl.find(appl => appl.status.id === 3)
+            console.log(applic)
+            rating = parseInt(rating)
+            console.log(rating)
+            this.toggleModalRating = false
+      api.updateRating(applic.applicant.id, rating)
+      .then()
+      .catch(err => console.log(err))
+          })
+          .catch(err => console.log(err));
+      // Change to in completed
+      api.updateStatusJob(job.id, 2)
+          .then()
+          .catch(err => console.log(err))
+    },
   },
-  created() {
-    api.getEmployeePosts(this.userId)
-        .then(res => this.employeePosts = res.data)
-        .catch(err => console.log(err));
-  }
 
 }
 </script>
@@ -334,9 +438,11 @@ a:hover {
   background-color: #cccfed;
   color: #333333 !important;
 }
-.scrolling{
+
+.scrolling {
   height: 20vw;
 }
+
 
 
 </style>

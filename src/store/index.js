@@ -56,12 +56,6 @@ export default new Vuex.Store({
                 commit('auth_request')
                 axios({url: 'http://localhost:8080/users/register', data: user, method: 'POST' })
                     .then(resp => {
-                        // const token = resp.data.jwt
-                        // const user = resp.data.user
-                        // localStorage.setItem('token', token)
-                        // localStorage.setItem('user', user)
-                        // localStorage.setItem('user_id', resp.data.id)
-                        // localStorage.setItem('role', resp.data.role)
                         if(resp.data.role === "SEEKER"){
                             console.log("seeker")
                             let form = {

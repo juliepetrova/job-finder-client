@@ -3,9 +3,9 @@
 <template v-slot:header>
   <b-nav card-header tabs>
     <b-nav-item class="color-secondary " >Profile information</b-nav-item>
-    <div class="ml-48">
+    <div class="ml-56">
     <button v-if="editing"  @click="save(personalInfo)"
-            class=" bg-blue-500 hover:bg-blue-700 text-white px-4 p-2 rounded-full shadow-md focus:outline-none ml-48">
+            class=" bg-blue-500 hover:bg-blue-700 text-white px-4 p-2 rounded-full shadow-md focus:outline-none ml-56">
       Save
     </button>
       <button v-if="!editing" @click="editing = !editing"
@@ -22,14 +22,6 @@
 
 </template>
 <div class="tab-content profile-tab" id="myTabContent">
-<!--  <div class="row">-->
-<!--    <div class="col-md-6">-->
-<!--      <label>Username</label>-->
-<!--    </div>-->
-<!--    <div class="col-md-6">-->
-<!--      <p>julie123</p>-->
-<!--    </div>-->
-<!--  </div>-->
   <div class="row">
     <div class="col-md-6">
       <label>Name</label>
@@ -99,7 +91,6 @@ export default {
   methods: {
     save(personalInfo) {
       this.editing = false;
-      console.log(this.personalInfo.first_name)
       api.updateUser(personalInfo);
     }
   }

@@ -19,7 +19,7 @@
             <div class="mb-4">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Job date</label>
               <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                     id="date" v-model="form.date" required type="text" placeholder="Enter job date">
+                     id="date" v-model="form.date" required type="text" placeholder="Enter job date (MM-DD-YYYY)">
             </div>
             <div class="mb-4">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="payment">Payment amount</label>
@@ -63,6 +63,7 @@
 
 <script>
 import api from "@/components/backend-api";
+import moment from 'moment'
 
 export default {
   props: ["modalShow"],
@@ -88,12 +89,15 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.form.date = moment(String(this.form.date)).format('YYYY-MM-DD')
       let resp = JSON.stringify(this.form);
       api.saveJob(resp)
-      .then(res => this.post = res.data)
+      .then(res => {
+        this.post = res.data
+        this.modalShow = false;
+        this.$emit('closeModal', 'false')})
       .catch(err => console.log(err));
-      this.modalShow = false;
-      this.$emit('closeModal', 'false')
+
     },
     onReset(evt) {
       evt.preventDefault()

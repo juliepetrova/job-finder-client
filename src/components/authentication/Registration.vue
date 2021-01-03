@@ -3,12 +3,18 @@
     <div class="flex">
       <div class="w-1/3 ">
         <div class="float-right">
-        <div class="mt-24 pt-5 flex justify-center align-items-center mb-5">
-          <button  @click="selectRole('POSTER')" :class="{active: activeBtn === 'POSTER' }" class="poster rounded-full h-56 w-56 border-4 border-yellow-400 hover:border-indigo-600 focus:outline-none pt-40 font-bold">Post jobs</button>
-        </div>
-        <div class="flex justify-center align-items-center">
-          <button @click="selectRole('SEEKER')"  :class="{active: activeBtn === 'SEEKER' }" class="seeker rounded-full h-56 w-56 border-4 border-yellow-400 hover:border-indigo-600 focus:outline-none pt-40 font-bold">Find jobs</button>
-        </div>
+          <div class="mt-24 pt-5 flex justify-center align-items-center mb-5">
+            <button @click="selectRole('POSTER')" :class="{active: activeBtn === 'POSTER' }"
+                    class="poster rounded-full h-56 w-56 border-4 border-yellow-400 hover:border-indigo-600 focus:outline-none pt-40 font-bold">
+              Post jobs
+            </button>
+          </div>
+          <div class="flex justify-center align-items-center">
+            <button @click="selectRole('SEEKER')" :class="{active: activeBtn === 'SEEKER' }"
+                    class="seeker rounded-full h-56 w-56 border-4 border-yellow-400 hover:border-indigo-600 focus:outline-none pt-40 font-bold">
+              Find jobs
+            </button>
+          </div>
         </div>
       </div>
       <div class="w-1/3 signup d-flex justify-content-center">
@@ -18,7 +24,8 @@
             <div class="input-container">
               <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
                 Please choose a role.
-              </b-alert></div>
+              </b-alert>
+            </div>
             <div v-if="authError!=''" class="flex items-center bg-red-300 text-white text-sm font-bold px-4 py-3 mb-4"
                  role="alert">
               <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -71,7 +78,6 @@
 </template>
 
 <script>
-// import api from "@/components/backend-api";
 
 export default {
 
@@ -106,7 +112,7 @@ export default {
       }
     },
     register() {
-      if(this.form.role) {
+      if (this.form.role) {
         let data = {
           first_name: this.form.firstname,
           last_name: this.form.lastname,
@@ -116,21 +122,14 @@ export default {
           role: this.form.role
         }
         this.$store.dispatch('register', data)
-            .then(() =>
+            .then(() => {
               console.log("registered!")
-            )
+              this.$router.push('/login')
+            })
             .catch(() => this.authError = "This username already exists")
-      }else{
+      } else {
         this.showDismissibleAlert = true
       }
-      // let uid =  localStorage.getItem('user_id')
-      // console.log(localStorage.getItem('user_id'))
-      // if(localStorage.getItem('role') === "SEEKER"){
-      //   api.saveApplicant({
-      //     id: uid,
-      //   })
-      // }
-      // this.$router.push('/login')
 
     },
     selectRole(role) {
@@ -191,18 +190,19 @@ export default {
   background-repeat: no-repeat;
 }
 
-.seeker{
+.seeker {
   background-image: url("https://image.freepik.com/free-vector/job-hunt-concept-illustration_114360-436.jpg");
   background-size: contain;
 }
-.poster{
+
+.poster {
   background-image: url("https://image.freepik.com/free-vector/online-job-interview_23-2148644500.jpg");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.active{
+.active {
   border-color: #3949ab;
 }
 

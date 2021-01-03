@@ -16,6 +16,9 @@
       <router-link v-if="!isLoggedIn" to="/signup" class="lg:mr-8">
         <h2 class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Sign up</h2>
       </router-link>
+      <router-link v-if="isLoggedIn  && (role==='ADMIN')" to="/admin/dashboard" class="sm:mr-8">
+        <h2 class="p-4 text-gray-700 rounded-lg hover:bg-gray-300">Dashboard</h2>
+      </router-link>
 
       <div v-if="isLoggedIn" class="dropdown inline-block relative">
         <button
@@ -57,6 +60,7 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     role: () => {
+      console.log(localStorage.getItem('role'))
       return localStorage.getItem('role');
     }
   },
