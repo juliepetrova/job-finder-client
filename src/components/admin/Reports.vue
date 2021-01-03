@@ -34,7 +34,7 @@
             </div>
 
             <div class="flex items-center">
-              <button @click="markForReview(index,report.job.id)"
+              <button @click="markForReview(index,report.job.id, report.id)"
                       class="bg-green-300 hover:bg-green-400 p-2 m-2 rounded-full shadow-md flex justify-center items-center focus:outline-none">
                 Approve
               </button>
@@ -69,7 +69,7 @@ export default {
     return {}
   },
   methods: {
-    markForReview(index, jobId) {
+    markForReview(index, jobId, id) {
       this.$confirm(
           {
             message: `This job will be marked for review. Please confirm your choice!`,
@@ -82,6 +82,7 @@ export default {
                 this.reports.splice(index, 1)
                 api.updateStatusJob(jobId, 6)
                     .then(response => {
+                      api.deleteReport(id)
                       console.log(response.data)
                     })
                     .catch(error => {
